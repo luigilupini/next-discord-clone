@@ -17,7 +17,7 @@ export default async function RootLayout({ children }: PropsWithChildren) {
     >
       <body className="screen-full flex overflow-hidden">
         <ProviderTree session={session}>
-          <main className="flex-1">
+          <main className="mx-auto size-full max-w-7xl">
             {children}
             <ThemeToggle />
           </main>
