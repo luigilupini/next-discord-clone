@@ -2,8 +2,7 @@
 
 import { Toaster } from "@/components/ui/toaster"
 import { TooltipProvider } from "@/components/ui/tooltip"
-
-import ThemeProvider from "@/context/theme"
+import ThemeProvider from "@/state/context/theme"
 import { Session } from "next-auth"
 import { SessionProvider } from "next-auth/react"
 import { PropsWithChildren } from "react"

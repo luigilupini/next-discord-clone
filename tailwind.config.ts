@@ -3,11 +3,11 @@ import type { Config } from "tailwindcss"
 const config = {
   darkMode: ["class"],
   content: [
-    './pages/**/*.{ts,tsx}',
-    './components/**/*.{ts,tsx}',
-    './app/**/*.{ts,tsx}',
-    './src/**/*.{ts,tsx}',
-	],
+    "./pages/**/*.{ts,tsx}",
+    "./components/**/*.{ts,tsx}",
+    "./app/**/*.{ts,tsx}",
+    "./src/**/*.{ts,tsx}",
+  ],
   prefix: "",
   theme: {
     container: {
@@ -18,6 +18,13 @@ const config = {
       },
     },
     extend: {
+      fontFamily: {
+        karla: "var(--font-karla)",
+        geist: "var(--font-geist)",
+        geist_mono: "var(--font-geist-mono)",
+        jetbrains_mono: "var(--font-jetbrains-mono)",
+        flow: "var(--font-flow)",
+      },
       colors: {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
@@ -36,6 +43,14 @@ const config = {
           DEFAULT: "hsl(var(--destructive))",
           foreground: "hsl(var(--destructive-foreground))",
         },
+        success: {
+          DEFAULT: "hsl(var(--success))",
+          foreground: "hsl(var(--success-foreground))",
+        },
+        warning: {
+          DEFAULT: "hsl(var(--warning))",
+          foreground: "hsl(var(--warning-foreground))",
+        },
         muted: {
           DEFAULT: "hsl(var(--muted))",
           foreground: "hsl(var(--muted-foreground))",
@@ -52,12 +67,25 @@ const config = {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
         },
+        chart_primary: {
+          DEFAULT: "hsl(var(--chart-primary))",
+        },
+        chart_secondary: {
+          DEFAULT: "hsl(var(--chart-secondary))",
+        },
+        chart_accent: {
+          DEFAULT: "hsl(var(--chart-accent))",
+        },
       },
       borderRadius: {
         lg: "var(--radius)",
         md: "calc(var(--radius) - 2px)",
         sm: "calc(var(--radius) - 4px)",
       },
+      gridTemplateColumns: {
+        autoFit: "repeat(auto-fit, minmax(270px, 1fr))",
+      },
+
       keyframes: {
         "accordion-down": {
           from: { height: "0" },
@@ -74,7 +102,13 @@ const config = {
       },
     },
   },
-  plugins: [require("tailwindcss-animate")],
-} satisfies Config
+  // These are third-party utility plugins added to enhance tailwind capabilities
+  plugins: [
+    require("tailwindcss-animate"),
+    require("tailwindcss-animated"),
+    require("@tailwindcss/typography"),
+    require("@tailwindcss/aspect-ratio"),
+  ],
+} as Config
 
 export default config

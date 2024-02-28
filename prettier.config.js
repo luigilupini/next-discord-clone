@@ -33,7 +33,6 @@ module.exports = {
   importOrderCombineTypeAndValueImports: true,
   plugins: [
     "prettier-plugin-organize-imports",
-    "prettier-plugin-organize-attributes",
     "prettier-plugin-tailwindcss",
   ],
   tailwindConfig: "./tailwind.config.ts",

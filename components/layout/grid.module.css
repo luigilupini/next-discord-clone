@@ -1,0 +1,63 @@
+/* Grid container styles */
+.basic,
+.aside,
+.balanced {
+  display: grid;
+  gap: 8px;
+  /* Fill the entire viewport height */
+  height: 100vh;
+  padding: 1rem;
+}
+
+.basic {
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: 48px 1fr 48px;
+  grid-template-areas:
+    "header header header"
+    "body body body"
+    "footer footer footer";
+}
+
+.aside {
+  grid-template-columns: minmax(190px, 280px) 1fr 1fr;
+  grid-template-rows: 48px 1fr 48px;
+  grid-template-areas:
+    ". header header"
+    "aside body body"
+    ". footer footer";
+}
+
+.balanced {
+  grid-template-columns: minmax(100px, 190px) 1fr minmax(100px, 190px);
+  grid-template-rows: 48px 1fr 48px;
+  grid-template-areas:
+    "aside header end"
+    "aside body end"
+    "aside footer end";
+}
+
+/* Area-specific styles */
+.basic_header,
+.aside_header,
+.balanced_header {
+  grid-area: header;
+}
+.basic_body,
+.aside_body,
+.balanced_body {
+  grid-area: body;
+}
+.basic_footer,
+.aside_footer,
+.balanced_footer {
+  grid-area: footer;
+}
+.aside_aside {
+  grid-area: aside;
+}
+.balanced_aside {
+  grid-area: aside;
+}
+.balanced_end {
+  grid-area: end;
+}
