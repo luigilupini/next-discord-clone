@@ -2,7 +2,7 @@
   "extends": [
     "next/core-web-vitals",
     "tailwindcss/recommended",
-    "plugin:prettier/recommended",
+    "prettier/recommended",
     "prettier"
   ],
   "plugins": ["prettier"],

@@ -1,5 +1,5 @@
-import CreateForm from "@/components/create-form"
-import JoinForm from "@/components/join-form"
+import CreateForm from "@/components/form/create-form"
+import JoinForm from "@/components/form/join-form"
 
 export default function HomePage() {
   return (

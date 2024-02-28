@@ -6,9 +6,9 @@ import { delay } from "@/lib/utils"
 import { SendHorizonal } from "lucide-react"
 import { useAction } from "next-safe-action/hooks"
 import { useState } from "react"
-import FluidSpinner from "./loader/fluid"
-import { Input } from "./ui/input"
-import { useToast } from "./ui/use-toast"
+import FluidSpinner from "../loader/fluid"
+import { Input } from "../ui/input"
+import { useToast } from "../ui/use-toast"
 
 export default function MessageForm({ roomId }: { roomId: string }) {
   const [isLoading, setIsLoading] = useState(false)

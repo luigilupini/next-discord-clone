@@ -5,21 +5,19 @@ import { joinRoom } from "@/lib/actions/join-room"
 import { delay } from "@/lib/utils"
 import { useAction } from "next-safe-action/hooks"
 import { useRouter } from "next/navigation"
-import { useRef, useState } from "react"
-import FluidSpinner from "./loader/fluid"
-import { Card } from "./ui/card"
-import { Input } from "./ui/input"
-import { useToast } from "./ui/use-toast"
+import { useState } from "react"
+import FluidSpinner from "../loader/fluid"
+import { Card } from "../ui/card"
+import { Input } from "../ui/input"
+import { useToast } from "../ui/use-toast"
 
 export default function JoinForm() {
   const [isLoading, setIsLoading] = useState(false)
-  const closeRef = useRef<HTMLButtonElement>(null)
   const router = useRouter()
   const { toast } = useToast()
 
   const { execute, result, status, reset } = useAction(joinRoom, {
     onSuccess: ({ roomId, success }) => {
-      closeRef.current?.click()
       success &&
         toast({
           variant: "default",

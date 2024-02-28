@@ -1,9 +1,9 @@
+import MessageForm from "@/components/form/message-form"
 import GridBase, {
   GridBody,
   GridFooter,
   GridHeader,
 } from "@/components/layout/grid"
-import MessageForm from "@/components/message-form"
 import Messages from "@/components/messages"
 import db from "@/lib/db"
 import { formatDate } from "@/lib/utils"
@@ -43,9 +43,6 @@ export default async function RoomPage({ params }: PageProps) {
       </GridHeader>
       <GridBody className="relative">
         <div className="size-full rounded-md bg-card p-6 py-4 text-card-foreground">
-          <span className="absolute right-4 top-2 text-sm opacity-70">
-            Messages
-          </span>
           <Messages roomId={roomId} initialMessages={serializedMessages} />
         </div>
       </GridBody>
