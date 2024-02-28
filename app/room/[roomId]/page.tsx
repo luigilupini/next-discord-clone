@@ -3,15 +3,14 @@ import GridBase, {
   GridFooter,
   GridHeader,
 } from "@/components/layout/grid"
-import MessageField from "@/components/message-field"
+import MessageForm from "@/components/message-form"
 import Messages from "@/components/messages"
 import db from "@/lib/db"
+import { formatDate } from "@/lib/utils"
 import Link from "next/link"
 
 interface PageProps {
-  params: {
-    roomId: string
-  }
+  params: { roomId: string }
 }
 
 export default async function RoomPage({ params }: PageProps) {
@@ -19,11 +18,13 @@ export default async function RoomPage({ params }: PageProps) {
   const existingMessages = await db.message.findMany({
     where: { chatRoomId: roomId },
   })
-  const serializedMessages = existingMessages.map((message) => ({
-    text: message.text,
-    id: message.id,
-  }))
-
+  const serializedMessages = existingMessages.map(
+    ({ text, id, createdAt }) => ({
+      text: text,
+      id: id,
+      date: formatDate(createdAt, "medium"),
+    }),
+  )
   return (
     <GridBase layout="basic">
       <GridHeader className="px-1">
@@ -48,7 +49,7 @@ export default async function RoomPage({ params }: PageProps) {
       </GridBody>
       <GridFooter className="px-1">
         <footer className="flex size-full items-center justify-between gap-2">
-          <MessageField roomId={roomId} />
+          <MessageForm roomId={roomId} />
         </footer>
       </GridFooter>
     </GridBase>

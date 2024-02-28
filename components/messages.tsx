@@ -16,14 +16,11 @@ export default function Messages({ initialMessages, roomId }: MessagesProps) {
   useEffect(() => {
     pusherClient.subscribe(roomId)
     pusherClient.bind("incoming-message", (text: string) => {
-      setIncomingMessages((prev) => [...prev, text])
+      setIncomingMessages((prev) => [text, ...prev])
     })
     return () => pusherClient.unsubscribe(roomId)
   }, [])
-
-  console.log("initialMessages", initialMessages)
   console.log("incomingMessages", incomingMessages)
-
   return (
     <div className="ping flex size-full flex-col-reverse justify-start gap-1 text-sm">
       {initialMessages.map((message, index) => (

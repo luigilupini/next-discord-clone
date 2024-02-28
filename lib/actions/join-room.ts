@@ -10,7 +10,7 @@ export const action = safeAction()
 
 const updateSchema = zfd.formData({
   roomId: z
-    .string({ required_error: "Please enter a chat valid room name" })
+    .string({ required_error: "Please enter a valid room name" })
     .min(3, "Please use at least 3 characters")
     .max(150, "Please use less than 15 characters"),
 })
