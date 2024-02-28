@@ -4,6 +4,7 @@ import { pusherClient } from "@/lib/pusher"
 import { cn } from "@/lib/utils"
 import { useEffect, useState } from "react"
 import { Badge } from "./ui/badge"
+import { ScrollArea } from "./ui/scroll-area"
 
 interface MessagesProps {
   initialMessages: { text: string; id: string }[]
@@ -20,22 +21,26 @@ export default function Messages({ initialMessages, roomId }: MessagesProps) {
     })
     return () => pusherClient.unsubscribe(roomId)
   }, [])
-  console.log("incomingMessages", incomingMessages)
+
   return (
-    <div className="ping flex size-full flex-col-reverse justify-start gap-1 text-sm">
-      {initialMessages.map((message, index) => (
-        <Badge
-          key={message.id}
-          className={cn("ping flex w-fit items-center justify-start")}
-        >
-          {message.text}
-        </Badge>
-      ))}
-      {incomingMessages.map((text, i) => (
-        <p key={i} className="text-success">
-          {text}
-        </p>
-      ))}
-    </div>
+    <ScrollArea className="ping size-full text-sm">
+      <div className="ping flex size-full flex-col-reverse justify-start gap-1">
+        {initialMessages.map((message, index) => (
+          <Badge
+            key={message.id}
+            className={cn("ping flex w-fit items-center justify-start")}
+          >
+            {message.text}
+          </Badge>
+        ))}
+        <div className="ping flex size-full flex-col justify-end gap-1">
+          {incomingMessages.map((text, i) => (
+            <Badge key={i} className="w-fit bg-success text-success-foreground">
+              {text}
+            </Badge>
+          ))}
+        </div>
+      </div>
+    </ScrollArea>
   )
 }

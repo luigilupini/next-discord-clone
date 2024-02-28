@@ -7,7 +7,6 @@ import { SendHorizonal } from "lucide-react"
 import { useAction } from "next-safe-action/hooks"
 import { useState } from "react"
 import FluidSpinner from "./loader/fluid"
-import { Card } from "./ui/card"
 import { Input } from "./ui/input"
 import { useToast } from "./ui/use-toast"
 
@@ -46,7 +45,7 @@ export default function MessageForm({ roomId }: { roomId: string }) {
   })
 
   return (
-    <Card className="flex w-full max-w-2xl gap-2 p-6">
+    <>
       <form
         action={async (values) => {
           await delay(1000)
@@ -61,7 +60,7 @@ export default function MessageForm({ roomId }: { roomId: string }) {
           placeholder="Type a message here"
           className="bg-background placeholder:opacity-70"
         />
-        <input type="text" name="roomId" defaultValue={roomId} />
+        <input hidden type="text" name="roomId" defaultValue={roomId} />
 
         <Button
           type="submit"
@@ -74,12 +73,12 @@ export default function MessageForm({ roomId }: { roomId: string }) {
           {isLoading ? (
             <FluidSpinner />
           ) : (
-            <div className="flex items-center justify-center gap-2">
+            <div className="flex size-full items-center justify-center gap-2">
               Send <SendHorizonal size={16} />
             </div>
           )}
         </Button>
       </form>
-    </Card>
+    </>
   )
 }

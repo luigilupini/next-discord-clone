@@ -27,16 +27,18 @@ export default async function RoomPage({ params }: PageProps) {
   )
   return (
     <GridBase layout="basic">
-      <GridHeader className="px-1">
-        <header className="flex size-full items-center gap-2">
-          <Link href="/" className="flex items-center gap-2 font-normal">
-            Home
-          </Link>
-          <span className="font-extralight">/</span>
-          <div className="flex items-center gap-2 font-semibold">
-            Room
-            <span className="font-normal text-primary">{roomId}</span>
+      <GridHeader>
+        <header className="flex size-full items-center justify-between gap-2">
+          <div className="flex gap-1">
+            <Link href="/" className="flex items-center gap-2 font-normal">
+              Home
+            </Link>
+            <span className="font-extralight">/</span>
+            <div className="flex items-center gap-2 font-semibold">Room</div>
           </div>
+          <span className="rounded-lg border px-2 font-jetbrains_mono text-sm font-normal text-primary">
+            {roomId}
+          </span>
         </header>
       </GridHeader>
       <GridBody className="relative">
