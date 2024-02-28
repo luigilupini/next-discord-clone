@@ -19,7 +19,6 @@ export default async function RoomPage({ params }: PageProps) {
   const existingMessages = await db.message.findMany({
     where: { chatRoomId: roomId },
   })
-
   const serializedMessages = existingMessages.map((message) => ({
     text: message.text,
     id: message.id,

@@ -93,5 +93,13 @@
     "prisma": "^5.9.1",
     "tailwindcss": "^3.4.1",
     "typescript": "^5.3.3"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "overrides": {
+    "commander": "^9.4.1",
+    "ajv": "^8.12.0",
+    "@sinclair/typebox": "0.27.8"
   }
 }
