@@ -1,19 +1,31 @@
+import Footer from "@/components/footer"
 import CreateForm from "@/components/form/create-room-form"
 import JoinForm from "@/components/form/join-form"
-import Rooms from "@/components/rooms"
+import GridBase, {
+  GridBody,
+  GridFooter,
+  GridHeader,
+} from "@/components/layout/grid"
+import RoomList from "@/components/rooms-list"
 
 export default function HomePage() {
   return (
-    <main className="flex size-full flex-col items-center justify-center gap-2">
-      <div className="flex w-full max-w-xl flex-col gap-4">
-        <article className="relative flex flex-col items-start gap-4">
-          <div className="flex gap-4">
+    <GridBase layout="basic">
+      <GridBody>
+        <GridHeader className="py-2 pr-2">
+          <h1 className="text-3xl font-bold">Chit Chat</h1>
+          <div className="flex items-center gap-2">
             <CreateForm />
-            <Rooms />
+            <RoomList />
           </div>
+        </GridHeader>
+        <article className="relative flex size-full flex-col items-end justify-center gap-4 px-4">
           <JoinForm />
         </article>
-      </div>
-    </main>
+      </GridBody>
+      <GridFooter>
+        <Footer />
+      </GridFooter>
+    </GridBase>
   )
 }

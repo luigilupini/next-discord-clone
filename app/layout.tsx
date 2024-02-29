@@ -1,5 +1,4 @@
 import { auth } from "@/auth"
-import Footer from "@/components/footer"
 import { ThemeToggle } from "@/components/theme-toggle"
 import { rubik } from "@/lib/typeface/fonts"
 import { cn } from "@/lib/utils"
@@ -23,7 +22,6 @@ export default async function RootLayout({ children }: PropsWithChildren) {
           <main className="mx-auto flex size-full max-w-5xl flex-col">
             {children}
             <ThemeToggle />
-            <Footer />
           </main>
         </ProviderTree>
       </body>

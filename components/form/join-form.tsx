@@ -47,7 +47,7 @@ export default function JoinForm() {
   })
 
   return (
-    <Card className="flex w-full max-w-2xl gap-2 p-6">
+    <Card className="flex w-full gap-2 p-6">
       <form
         action={async (values) => {
           await delay(1000)

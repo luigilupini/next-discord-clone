@@ -11,22 +11,13 @@ import { useSession } from "next-auth/react"
 import { useAction } from "next-safe-action/hooks"
 import { useState } from "react"
 
-export default function MessageForm({ roomId }: { roomId: string }) {
+export default function CreateMessageForm({ roomId }: { roomId: string }) {
   const [isLoading, setIsLoading] = useState(false)
-  const { toast } = useToast()
   const { data } = useSession()
+  const { toast } = useToast()
 
   const { execute, result, status, reset } = useAction(sendMessage, {
-    onSuccess: ({ success }) => {
-      // success &&
-      //   toast({
-      //     variant: "default",
-      //     title: "Success!",
-      //     className: "bg-success text-success-foreground",
-      //     description: `${success.message}`,
-      //   })
-      setIsLoading(false)
-    },
+    onSuccess: () => setIsLoading(false),
     onError: ({ validationErrors, serverError }) => {
       validationErrors &&
         toast({

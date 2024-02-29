@@ -1,18 +1,24 @@
 "use client"
 
-import { Badge } from "@/components/ui/badge"
+import { Card } from "@/components/ui/card"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { pusherClient } from "@/lib/pusher"
-import { cn } from "@/lib/utils"
+import { cn, lastSeen } from "@/lib/utils"
+import { Message } from "@prisma/client"
+import { User } from "next-auth"
 import { useEffect, useState } from "react"
 
-type MessagesProps = {
-  initialMessages: { text: string; id: string }[]
-  roomId: string
+type MessageWithUser = Message & {
+  user: User | null
 }
 
-export default function Messages({ initialMessages, roomId }: MessagesProps) {
-  const [incomingMessages, setIncomingMessages] = useState<string[]>([])
+type Props = {
+  roomId: string
+  messages: MessageWithUser[]
+}
+
+export default function Messages({ roomId, messages }: Props) {
+  const [incomingMessages, setIncomingMessages] = useState<any[]>([])
 
   useEffect(() => {
     pusherClient.subscribe(roomId)
@@ -22,56 +28,34 @@ export default function Messages({ initialMessages, roomId }: MessagesProps) {
     return () => pusherClient.unsubscribe(roomId)
   }, [])
 
-  console.log("Messages Component: ")
-
-  console.log("Initial ")
-  console.table(initialMessages)
-
-  console.log("Incoming ")
-  console.table(incomingMessages)
-
   return (
     <ScrollArea className="size-full py-2 text-sm">
-      <MessagesWrapper direction="initial">
-        {initialMessages.map(({ id, text }) => (
-          <Message key={id} text={text} direction="initial" />
+      <MessagesWrapper direction="incoming" className="mb-1">
+        {incomingMessages.map((message, index) => (
+          <MessageCard key={index} message={message} type="incoming" />
         ))}
-        <MessagesWrapper direction="incoming">
-          {incomingMessages.map((text, i) => (
-            <Message key={i} text={text} direction="incoming" />
-          ))}
-        </MessagesWrapper>
+      </MessagesWrapper>
+
+      <MessagesWrapper direction="initial">
+        {messages.map((message) => (
+          <MessageCard key={message.id} message={message} type="initial" />
+        ))}
       </MessagesWrapper>
     </ScrollArea>
   )
 }
 
-const Message = ({
-  text,
-  direction,
-}: {
-  text: string
-  direction?: "initial" | "incoming"
-}) => (
-  <Badge
-    className={cn("flex w-fit items-center", {
-      "bg-primary text-primary-foreground": direction === "initial",
-      "bg-success text-success-foreground": direction === "incoming",
-    })}
-  >
-    {text}
-  </Badge>
-)
-
 const MessagesWrapper = ({
   children,
   direction,
+  className,
 }: {
   children: React.ReactNode
   direction?: "initial" | "incoming"
+  className?: string
 }) => (
   <div
-    className={cn("flex size-full flex-col gap-1", {
+    className={cn("ping flex size-full flex-col gap-1", className, {
       "flex-col-reverse justify-start": direction === "initial",
       "flex-col justify-end": direction === "incoming",
     })}
@@ -79,3 +63,32 @@ const MessagesWrapper = ({
     {children}
   </div>
 )
+
+const MessageCard = ({
+  message,
+  type,
+}: {
+  message: MessageWithUser
+  type: "initial" | "incoming"
+}) => {
+  console.log("MessageCard: ", message)
+  return (
+    <Card
+      className={cn(
+        "flex size-fit min-w-48 max-w-md flex-col items-center gap-1 px-3 py-1 shadow-none",
+        {
+          "bg-success text-success-foreground": type === "incoming",
+          "bg-primary text-primary-foreground": type === "initial",
+        },
+      )}
+    >
+      <div className="flex size-full items-center justify-between text-xs">
+        <span className="font-semibold">{message.user?.name}</span>
+        <span className="text-[10px]">{lastSeen(message.createdAt)}</span>
+      </div>
+      <div className="flex size-full flex-wrap items-start overflow-hidden text-xs font-normal">
+        {message.text}
+      </div>
+    </Card>
+  )
+}

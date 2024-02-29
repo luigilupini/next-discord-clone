@@ -14,7 +14,7 @@ import db from "@/lib/db"
 import { formatDate } from "@/lib/utils"
 import { MessagesSquare } from "lucide-react"
 
-export default async function Rooms() {
+export default async function RoomList() {
   const rooms = await db.chatRoom.findMany()
   return (
     <Sheet>

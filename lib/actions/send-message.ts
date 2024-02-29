@@ -12,7 +12,7 @@ const schema = zfd.formData({
   text: z
     .string({ required_error: "Please enter a message" })
     .min(3, "Please use at least 3 characters")
-    .max(150, "Please use less than 15 characters"),
+    .max(250, "Please use less than 15 characters"),
   roomId: z
     .string({ required_error: "Please enter a valid room name" })
     .min(3, "Please use at least 3 characters")
@@ -27,7 +27,13 @@ export const sendMessage = action(schema, async ({ text, roomId, userId }) => {
   try {
     // https://pusher.com/docs/channels/getting_started/javascript/#trigger-events-from-your-server
     // pusher.trigger('my-channel', 'my-event', {:message => 'hello world'})
-    pusherServer.trigger(roomId, "incoming-message", text)
+    pusherServer.trigger(roomId, "incoming-message", {
+      text: text,
+      roomId: roomId,
+      user: await db.user.findUnique({ where: { id: userId } }),
+      createdAt: new Date(),
+    })
+
     const result = await db.message.create({
       data: {
         text: text,

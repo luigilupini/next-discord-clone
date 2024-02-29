@@ -1,5 +1,6 @@
 import clsx, { ClassValue } from "clsx"
 import { format } from "date-fns"
+import moment from "moment-timezone"
 import { twMerge } from "tailwind-merge"
 
 export const initials = (fullName: string) => {
@@ -75,4 +76,10 @@ export const formatDateToLocal = (
   }
   const formatter = new Intl.DateTimeFormat(locale, options)
   return formatter.format(date)
+}
+
+export const lastSeen = (time: Date | undefined) => {
+  if (!time) return ""
+  const timeInSA = moment(time).tz("Africa/Johannesburg")
+  return timeInSA.fromNow()
 }

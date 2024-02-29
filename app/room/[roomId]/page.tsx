@@ -1,4 +1,4 @@
-import MessageForm from "@/components/form/create-message-form"
+import CreateMessageForm from "@/components/form/create-message-form"
 import GridBase, {
   GridBody,
   GridFooter,
@@ -6,8 +6,7 @@ import GridBase, {
 } from "@/components/layout/grid"
 import Messages from "@/components/messages"
 import { Button } from "@/components/ui/button"
-import db from "@/lib/db"
-import { formatDate } from "@/lib/utils"
+import userMessages from "@/lib/actions/user-messages"
 import { Antenna, ChevronLeft } from "lucide-react"
 import Link from "next/link"
 
@@ -17,16 +16,7 @@ interface PageProps {
 
 export default async function RoomPage({ params }: PageProps) {
   const { roomId } = params
-  const existingMessages = await db.message.findMany({
-    where: { chatRoomId: roomId },
-  })
-  const serializedMessages = existingMessages.map(
-    ({ text, id, createdAt }) => ({
-      text: text,
-      id: id,
-      date: formatDate(createdAt, "medium"),
-    }),
-  )
+  const initial = await userMessages({ roomId })
   return (
     <GridBase layout="basic" className="p-1">
       <GridHeader>
@@ -55,13 +45,13 @@ export default async function RoomPage({ params }: PageProps) {
         </header>
       </GridHeader>
       <GridBody className="relative">
-        <div className="size-full rounded-md bg-card p-6 py-4 text-card-foreground">
-          <Messages roomId={roomId} initialMessages={serializedMessages} />
+        <div className="size-full rounded-md border bg-card p-6 py-4 text-card-foreground shadow-sm">
+          <Messages roomId={roomId} messages={initial} />
         </div>
       </GridBody>
       <GridFooter className="px-1">
         <footer className="flex size-full items-center justify-between gap-2">
-          <MessageForm roomId={roomId} />
+          <CreateMessageForm roomId={roomId} />
         </footer>
       </GridFooter>
     </GridBase>
