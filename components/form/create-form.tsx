@@ -2,7 +2,7 @@
 
 import { Button } from "@/components/ui/button"
 import { createRoom } from "@/lib/actions/create-room"
-import { Hammer } from "lucide-react"
+import { Hammer, Plus } from "lucide-react"
 import { useFormState, useFormStatus } from "react-dom"
 
 export default async function CreateForm() {
@@ -18,17 +18,23 @@ export default async function CreateForm() {
 const CreateButton = () => {
   const { pending } = useFormStatus()
   return (
-    <Button type="submit" variant="default">
+    <Button type="submit" variant="outline">
       {pending ? (
         <span className="flex items-center gap-2">
           <span className="animate-fade">Building</span>
           <Hammer
             size={18}
-            className="origin-bottom-left animate-wiggle-more fill-primary-foreground/20 text-primary-foreground animate-normal animate-duration-1000 animate-infinite"
+            className="origin-bottom-left animate-wiggle-more fill-primary/20 text-primary animate-normal animate-duration-1000 animate-infinite"
           />
         </span>
       ) : (
-        "Create room"
+        <span className="flex items-center gap-2">
+          <span className="animate-fade">Create</span>
+          <Plus
+            size={18}
+            className="origin-bottom-left animate-pulse animate-normal animate-duration-1000 animate-once"
+          />
+        </span>
       )}
     </Button>
   )

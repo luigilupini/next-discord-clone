@@ -1,10 +1,10 @@
 "use server"
 
+import db from "@/lib/db"
 import { createSafeActionClient as safeAction } from "next-safe-action"
 import { revalidatePath } from "next/cache"
 import { z } from "zod"
 import * as zfd from "zod-form-data"
-import db from "../db"
 
 export const action = safeAction()
 

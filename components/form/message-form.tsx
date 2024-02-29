@@ -1,18 +1,20 @@
 "use client"
 
+import FluidSpinner from "@/components/loader/fluid"
 import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input"
+import { useToast } from "@/components/ui/use-toast"
 import { sendMessage } from "@/lib/actions/send-message"
 import { delay } from "@/lib/utils"
 import { SendHorizonal } from "lucide-react"
+import { useSession } from "next-auth/react"
 import { useAction } from "next-safe-action/hooks"
 import { useState } from "react"
-import FluidSpinner from "../loader/fluid"
-import { Input } from "../ui/input"
-import { useToast } from "../ui/use-toast"
 
 export default function MessageForm({ roomId }: { roomId: string }) {
   const [isLoading, setIsLoading] = useState(false)
   const { toast } = useToast()
+  const { data } = useSession()
 
   const { execute, result, status, reset } = useAction(sendMessage, {
     onSuccess: ({ success }) => {
@@ -61,6 +63,7 @@ export default function MessageForm({ roomId }: { roomId: string }) {
           className="bg-background placeholder:opacity-70"
         />
         <input hidden type="text" name="roomId" defaultValue={roomId} />
+        <input hidden type="text" name="userId" defaultValue={data?.id} />
 
         <Button
           type="submit"

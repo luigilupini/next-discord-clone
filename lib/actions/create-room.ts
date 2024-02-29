@@ -1,8 +1,8 @@
 "use server"
 
+import db from "@/lib/db"
+import { delay } from "@/lib/utils"
 import { redirect } from "next/navigation"
-import db from "../db"
-import { delay } from "../utils"
 
 export const createRoom = async () => {
   const room = await db.chatRoom.create({

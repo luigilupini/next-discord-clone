@@ -22,6 +22,8 @@ export default function Messages({ initialMessages, roomId }: MessagesProps) {
     return () => pusherClient.unsubscribe(roomId)
   }, [])
 
+  console.table({ initialMessages, incomingMessages })
+
   return (
     <ScrollArea className="ping size-full py-2 text-sm">
       <MessagesWrapper direction="initial">
