@@ -23,11 +23,15 @@ export default function Messages({ initialMessages, roomId }: MessagesProps) {
   }, [])
 
   console.log("Messages Component: ")
+
+  console.log("Initial ")
   console.table(initialMessages)
+
+  console.log("Incoming ")
   console.table(incomingMessages)
 
   return (
-    <ScrollArea className="ping size-full py-2 text-sm">
+    <ScrollArea className="size-full py-2 text-sm">
       <MessagesWrapper direction="initial">
         {initialMessages.map(({ id, text }) => (
           <Message key={id} text={text} direction="initial" />

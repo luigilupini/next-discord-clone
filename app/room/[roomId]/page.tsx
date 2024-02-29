@@ -28,7 +28,7 @@ export default async function RoomPage({ params }: PageProps) {
     }),
   )
   return (
-    <GridBase layout="basic">
+    <GridBase layout="basic" className="p-1">
       <GridHeader>
         <header className="flex size-full items-center">
           <Button
