@@ -1,6 +1,6 @@
 import { auth } from "@/auth"
 import { ThemeToggle } from "@/components/theme-toggle"
-import { geist } from "@/lib/typeface/fonts"
+import { rubik } from "@/lib/typeface/fonts"
 import { cn } from "@/lib/utils"
 import ProviderTree from "@/state/context/provider-tree"
 import { redirect } from "next/navigation"
@@ -14,7 +14,7 @@ export default async function RootLayout({ children }: PropsWithChildren) {
   return (
     <html
       lang="en"
-      className={cn("antialiased", geist.className)}
+      className={cn("antialiased", rubik.className)}
       suppressHydrationWarning
     >
       <body className="screen-full flex overflow-hidden">

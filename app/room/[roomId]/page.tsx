@@ -5,8 +5,10 @@ import GridBase, {
   GridHeader,
 } from "@/components/layout/grid"
 import Messages from "@/components/messages"
+import { Button } from "@/components/ui/button"
 import db from "@/lib/db"
 import { formatDate } from "@/lib/utils"
+import { Antenna, ChevronLeft } from "lucide-react"
 import Link from "next/link"
 
 interface PageProps {
@@ -28,17 +30,28 @@ export default async function RoomPage({ params }: PageProps) {
   return (
     <GridBase layout="basic">
       <GridHeader>
-        <header className="flex size-full items-center justify-between gap-2">
-          <div className="flex gap-1">
-            <Link href="/" className="flex items-center gap-2 font-normal">
-              Home
+        <header className="flex size-full items-center">
+          <Button
+            asChild
+            variant="outline"
+            size="sm"
+            className="flex gap-1 rounded-l-full rounded-r-none border-r bg-secondary/50 shadow-none"
+          >
+            <Link href="/" className="flex items-center font-normal">
+              <ChevronLeft size={18} />
             </Link>
-            <span className="font-extralight">/</span>
-            <div className="flex items-center gap-2 font-semibold">Room</div>
-          </div>
-          <span className="rounded-lg border px-2 font-jetbrains_mono text-sm font-normal text-primary">
+          </Button>
+          <Button
+            variant="outline"
+            size="sm"
+            className="pointer-events-none -ml-[1px] flex gap-2 rounded-l-none rounded-r-full font-jetbrains_mono font-medium shadow-none"
+          >
+            <Antenna
+              size={14}
+              className="animate-pulse animate-duration-1000 animate-once animate-ease-in-out"
+            />
             {roomId}
-          </span>
+          </Button>
         </header>
       </GridHeader>
       <GridBody className="relative">

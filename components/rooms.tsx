@@ -43,12 +43,17 @@ export default async function Rooms() {
               key={room.id}
               className="flex items-center justify-between gap-2"
             >
-              <Badge className="w-fit" variant="outline">
-                <CopyContent className="z-50">{room.id}</CopyContent>
+              <Badge
+                className="flex w-full items-center justify-between border-border py-2 font-normal"
+                variant="outline"
+              >
+                <CopyContent className="z-50 font-jetbrains_mono font-medium">
+                  {room.id}
+                </CopyContent>
+                <span className="text-xs opacity-90">
+                  {formatDate(room.createdAt, "medium")}
+                </span>
               </Badge>
-              <span className="text-xs">
-                {formatDate(room.createdAt, "medium")}
-              </span>
             </div>
           ))}
         </article>
