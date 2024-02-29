@@ -1,4 +1,4 @@
-import CreateForm from "@/components/form/create-form"
+import CreateForm from "@/components/form/create-room-form"
 import JoinForm from "@/components/form/join-form"
 import Rooms from "@/components/rooms"
 

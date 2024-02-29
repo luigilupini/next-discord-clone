@@ -27,7 +27,6 @@ export const sendMessage = action(schema, async ({ text, roomId, userId }) => {
   try {
     // https://pusher.com/docs/channels/getting_started/javascript/#trigger-events-from-your-server
     // pusher.trigger('my-channel', 'my-event', {:message => 'hello world'})
-    console.log({ text, roomId, userId })
     pusherServer.trigger(roomId, "incoming-message", text)
     const result = await db.message.create({
       data: {
@@ -36,7 +35,7 @@ export const sendMessage = action(schema, async ({ text, roomId, userId }) => {
         userId: userId,
       },
     })
-    console.log(result)
+    console.log("sendMessage Action: ", result)
     if (!result) throw new Error("Chat could not be created.")
     // revalidatePath(`/room/${roomId}`)
     return {

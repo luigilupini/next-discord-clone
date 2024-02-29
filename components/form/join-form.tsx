@@ -21,8 +21,7 @@ export default function JoinForm() {
       success &&
         toast({
           variant: "default",
-          title: "Success!",
-          className: "bg-success text-success-foreground",
+          title: "Notification",
           description: `${success.message} ${roomId}`,
         })
       router.push(`/room/${roomId}`)

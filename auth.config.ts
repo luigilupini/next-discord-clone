@@ -1,5 +1,6 @@
 import { NextAuthConfig } from "next-auth"
 import AzureADProvider from "next-auth/providers/azure-ad"
+import GoogleProvider from "next-auth/providers/google"
 
 export default {
   providers: [
@@ -16,6 +17,10 @@ export default {
       account(account) {
         return account
       },
+    }),
+    GoogleProvider({
+      clientId: process.env.GOOGLE_CLIENT_ID!,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
     }),
   ],
 } as NextAuthConfig

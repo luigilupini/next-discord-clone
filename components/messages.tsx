@@ -1,12 +1,12 @@
 "use client"
 
+import { Badge } from "@/components/ui/badge"
+import { ScrollArea } from "@/components/ui/scroll-area"
 import { pusherClient } from "@/lib/pusher"
 import { cn } from "@/lib/utils"
 import { useEffect, useState } from "react"
-import { Badge } from "./ui/badge"
-import { ScrollArea } from "./ui/scroll-area"
 
-interface MessagesProps {
+type MessagesProps = {
   initialMessages: { text: string; id: string }[]
   roomId: string
 }
@@ -22,7 +22,9 @@ export default function Messages({ initialMessages, roomId }: MessagesProps) {
     return () => pusherClient.unsubscribe(roomId)
   }, [])
 
-  console.table({ initialMessages, incomingMessages })
+  console.log("Messages Component: ")
+  console.table(initialMessages)
+  console.table(incomingMessages)
 
   return (
     <ScrollArea className="ping size-full py-2 text-sm">

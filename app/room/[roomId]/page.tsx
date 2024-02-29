@@ -1,4 +1,4 @@
-import MessageForm from "@/components/form/message-form"
+import MessageForm from "@/components/form/create-message-form"
 import GridBase, {
   GridBody,
   GridFooter,

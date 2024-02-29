@@ -1,3 +1,6 @@
+import BadgeAmount from "@/components/badge-amount"
+import CopyContent from "@/components/copy-content"
+import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import {
   Sheet,
@@ -10,9 +13,6 @@ import {
 import db from "@/lib/db"
 import { formatDate } from "@/lib/utils"
 import { MessagesSquare } from "lucide-react"
-import BadgeAmount from "./badge-amount"
-import CopyContent from "./copy-contnet"
-import { Badge } from "./ui/badge"
 
 export default async function Rooms() {
   const rooms = await db.chatRoom.findMany()

@@ -24,7 +24,7 @@ export const joinRoom = action(updateSchema, async ({ roomId }) => {
     revalidatePath(`/room/${roomId}`)
     return {
       roomId: roomId,
-      success: { message: "Room found: " },
+      success: { message: "Opening " },
     }
   } catch (error) {
     throw new Error(`error: ${error}`)
