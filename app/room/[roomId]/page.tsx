@@ -48,11 +48,11 @@ export default async function RoomPage({ params }: PageProps) {
             </Button>
           </nav>
 
-          <div className="flex items-center gap-4 drop-shadow-sm">
+          <div className="flex items-center gap-5 drop-shadow-sm">
             <span className="text-sm">Members</span>
-            <div className="flex items-center">
+            <div className="flex flex-row-reverse items-center">
               {users.map((user) => (
-                <article key={user.id} className="relative -ml-2">
+                <article key={user.id} className="relative -ml-3">
                   <Avatar className="size-10 rounded-full">
                     <div className="size-full rounded-full border-[1px] border-border">
                       <AvatarImage
@@ -65,7 +65,7 @@ export default async function RoomPage({ params }: PageProps) {
                       </AvatarFallback>
                     </div>
                   </Avatar>
-                  <div className="absolute left-0 top-1 z-50 flex size-[9px] items-center justify-center rounded-full border bg-success" />
+                  <div className="absolute right-0 top-1 z-50 flex size-[9px] items-center justify-center rounded-full border bg-success" />
                 </article>
               ))}
             </div>
