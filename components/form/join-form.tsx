@@ -59,7 +59,7 @@ export default function JoinForm() {
           onChange={(e) => e.target.value}
           type="text"
           name="roomId"
-          placeholder="Enter room name"
+          placeholder="Enter a channel name"
           className="bg-background shadow-none placeholder:opacity-70"
         />
 

@@ -11,9 +11,9 @@ import RoomList from "@/components/rooms-list"
 export default function HomePage() {
   return (
     <GridBase layout="basic">
-      <GridBody>
+      <GridBody className="-mt-2">
         <GridHeader className="py-2 pr-2">
-          <h1 className="text-3xl font-bold">Chit Chat</h1>
+          <h1 className="text-3xl font-bold">Channels</h1>
           <div className="flex items-center gap-2">
             <CreateForm />
             <RoomList />

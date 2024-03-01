@@ -5,6 +5,7 @@ import { ScrollArea } from "@/components/ui/scroll-area"
 import { pusherClient } from "@/lib/pusher"
 import { cn, lastSeen } from "@/lib/utils"
 import { Message } from "@prisma/client"
+import { Zap } from "lucide-react"
 import { User } from "next-auth"
 import { useEffect, useState } from "react"
 
@@ -30,7 +31,7 @@ export default function Messages({ roomId, messages }: Props) {
 
   return (
     <ScrollArea className="size-full py-2 text-sm">
-      <MessagesWrapper direction="incoming" className="mb-1">
+      <MessagesWrapper direction="incoming" className="mb-2">
         {incomingMessages.map((message, index) => (
           <MessageCard key={index} message={message} type="incoming" />
         ))}
@@ -55,7 +56,7 @@ const MessagesWrapper = ({
   className?: string
 }) => (
   <div
-    className={cn("ping flex size-full flex-col gap-1", className, {
+    className={cn("flex size-full flex-col gap-2 px-2", className, {
       "flex-col-reverse justify-start": direction === "initial",
       "flex-col justify-end": direction === "incoming",
     })}
@@ -71,24 +72,33 @@ const MessageCard = ({
   message: MessageWithUser
   type: "initial" | "incoming"
 }) => {
-  console.log("MessageCard: ", message)
   return (
     <Card
       className={cn(
-        "flex size-fit min-w-48 max-w-md flex-col items-center gap-1 px-3 py-1 shadow-none",
+        "flex size-fit min-w-56 max-w-md flex-col items-center gap-[5px] rounded px-2 py-1",
         {
-          "bg-success text-success-foreground": type === "incoming",
-          "bg-primary text-primary-foreground": type === "initial",
+          "border-success bg-success text-success-foreground":
+            type === "incoming",
+          "border-secondary bg-secondary text-secondary-foreground":
+            type === "initial",
         },
       )}
     >
-      <div className="flex size-full items-center justify-between text-xs">
-        <span className="font-semibold">{message.user?.name}</span>
-        <span className="text-[10px]">{lastSeen(message.createdAt)}</span>
-      </div>
-      <div className="flex size-full flex-wrap items-start overflow-hidden text-xs font-normal">
+      <header className="flex size-full items-center justify-between text-xs">
+        <div className="flex items-center gap-1">
+          <span className="font-semibold">{message.user?.name}</span>
+          {type === "incoming" && <Zap size={11} />}
+        </div>
+        <span className="text-[10px] opacity-80">
+          {lastSeen(message.createdAt)}
+        </span>
+      </header>
+      <section className="flex size-full flex-wrap items-start overflow-hidden text-xs font-normal">
         {message.text}
-      </div>
+      </section>
+      <footer className="-mt-[2px] flex size-full h-4 items-center justify-end text-[9px] opacity-80">
+        {message.user?.email}
+      </footer>
     </Card>
   )
 }

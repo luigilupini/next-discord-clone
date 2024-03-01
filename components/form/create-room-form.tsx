@@ -18,13 +18,13 @@ export default async function CreateForm() {
 const CreateButton = () => {
   const { pending } = useFormStatus()
   return (
-    <Button type="submit" variant="outline">
+    <Button type="submit" variant="outline" className="ping">
       {pending ? (
         <span className="flex items-center gap-2">
-          <span className="animate-fade">Building</span>
+          <span className="animate-fade">Create</span>
           <Hammer
             size={18}
-            className="origin-bottom-left animate-wiggle-more fill-primary/20 text-primary animate-normal animate-duration-1000 animate-infinite"
+            className="-mt-[2px] origin-bottom-left animate-wiggle-more fill-primary/20 text-primary animate-normal animate-duration-1000 animate-infinite"
           />
         </span>
       ) : (
