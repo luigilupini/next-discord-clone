@@ -2,6 +2,7 @@
 
 import { Toaster } from "@/components/ui/toaster"
 import { TooltipProvider } from "@/components/ui/tooltip"
+import { SocketProvider } from "@/state/context/socket"
 import ThemeProvider from "@/state/context/theme"
 import { Session } from "next-auth"
 import { SessionProvider } from "next-auth/react"
@@ -20,10 +21,13 @@ const ProviderTree = ({ children, session }: Props) => {
         enableSystem
         disableTransitionOnChange
       >
-        <TooltipProvider>
-          {children}
-          <Toaster />
-        </TooltipProvider>
+        <SocketProvider>
+          <TooltipProvider>
+            {children}
+
+            <Toaster />
+          </TooltipProvider>
+        </SocketProvider>
       </ThemeProvider>
     </SessionProvider>
   )

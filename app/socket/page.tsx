@@ -1,22 +1,20 @@
 import Footer from "@/components/footer"
-import CreateForm from "@/components/form/create-room-form"
 import JoinForm from "@/components/form/join-form"
 import GridBase, {
   GridBody,
   GridFooter,
   GridHeader,
 } from "@/components/layout/grid"
-import RoomList from "@/components/rooms-list"
+import SocketIndicator from "@/components/socket/socket-indicator"
 
 export default function HomePage() {
   return (
     <GridBase layout="basic">
       <GridBody className="-mt-2">
         <GridHeader className="py-2 pr-2">
-          <h1 className="text-2xl font-bold">Pusher.com</h1>
-          <div className="flex items-center gap-2">
-            <CreateForm />
-            <RoomList />
+          <h1 className="text-2xl font-bold">Socket.io</h1>
+          <div className="flex items-center justify-center gap-2">
+            <SocketIndicator />
           </div>
         </GridHeader>
         <article className="relative flex size-full flex-col items-end justify-center gap-4 px-4">
