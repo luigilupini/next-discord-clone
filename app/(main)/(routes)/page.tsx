@@ -13,7 +13,7 @@ export default function HomePage() {
     <GridBase layout="basic">
       <GridBody className="-mt-2">
         <GridHeader className="py-2 pr-2">
-          <h1 className="text-2xl font-bold">Pusher.com</h1>
+          <h1 className="text-2xl font-bold">Discord</h1>
           <div className="flex items-center gap-2">
             <CreateForm />
             <RoomList />

@@ -4,15 +4,15 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
 import { initials } from "@/lib/utils"
+import { UserButton } from "@clerk/nextjs"
 import { motion } from "framer-motion"
 import { DoorClosed, DoorOpen } from "lucide-react"
 import { Session } from "next-auth"
-import { useSession } from "next-auth/react"
 import Link from "next/link"
 import { useState } from "react"
 
 export default function Footer() {
-  const { data: session } = useSession()
+  // const { data: session } = useSession()
   return (
     <motion.footer
       className="w-full"
@@ -25,7 +25,8 @@ export default function Footer() {
       }}
     >
       <Card className="flex w-full px-1 py-[3px] shadow-none">
-        {session && <Authorized session={session} />}
+        <UserButton afterSignOutUrl="/" />
+        {/* {session && <Authorized session={session} />} */}
       </Card>
     </motion.footer>
   )

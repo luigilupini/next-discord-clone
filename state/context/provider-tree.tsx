@@ -4,17 +4,12 @@ import { Toaster } from "@/components/ui/toaster"
 import { TooltipProvider } from "@/components/ui/tooltip"
 import { SocketProvider } from "@/state/context/socket"
 import ThemeProvider from "@/state/context/theme"
-import { Session } from "next-auth"
-import { SessionProvider } from "next-auth/react"
+import { ClerkProvider } from "@clerk/nextjs"
 import { PropsWithChildren } from "react"
 
-type Props = PropsWithChildren<{
-  session: Session | null
-}>
-
-const ProviderTree = ({ children, session }: Props) => {
+const ProviderTree = ({ children }: PropsWithChildren) => {
   return (
-    <SessionProvider session={session}>
+    <ClerkProvider>
       <ThemeProvider
         attribute="class"
         defaultTheme="system"
@@ -29,7 +24,7 @@ const ProviderTree = ({ children, session }: Props) => {
           </TooltipProvider>
         </SocketProvider>
       </ThemeProvider>
-    </SessionProvider>
+    </ClerkProvider>
   )
 }
 
