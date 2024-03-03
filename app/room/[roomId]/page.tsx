@@ -4,11 +4,7 @@ import GridBase, {
   GridFooter,
   GridHeader,
 } from "@/components/layout/grid"
-import Messages from "@/components/messages"
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Button } from "@/components/ui/button"
-import { chatroomUsers, userMessages } from "@/lib/actions/user-messages"
-import { initials } from "@/lib/utils"
 import { Antenna, ChevronLeft } from "lucide-react"
 import Link from "next/link"
 
@@ -18,8 +14,8 @@ interface PageProps {
 
 export default async function RoomPage({ params }: PageProps) {
   const { roomId } = params
-  const users = await chatroomUsers({ roomId })
-  const initial = await userMessages({ roomId })
+  // const users = await chatroomUsers({ roomId })
+  // const initial = await userMessages({ roomId })
   return (
     <GridBase layout="basic" className="p-1">
       <GridHeader>
@@ -51,7 +47,7 @@ export default async function RoomPage({ params }: PageProps) {
           <div className="flex items-center gap-5 drop-shadow-sm">
             <span className="text-sm">Members</span>
             <div className="flex flex-row-reverse items-center">
-              {users.map((user) => (
+              {/* {users.map((user) => (
                 <article key={user.id} className="relative -ml-3">
                   <Avatar className="size-10 rounded-full">
                     <div className="size-full rounded-full border-[1px] border-border">
@@ -67,14 +63,14 @@ export default async function RoomPage({ params }: PageProps) {
                   </Avatar>
                   <div className="absolute right-0 top-1 z-50 flex size-[9px] items-center justify-center rounded-full border bg-success" />
                 </article>
-              ))}
+              ))} */}
             </div>
           </div>
         </header>
       </GridHeader>
       <GridBody className="relative">
         <div className="size-full rounded-md border bg-card p-2 text-card-foreground shadow-sm">
-          <Messages roomId={roomId} messages={initial} />
+          {/* <Messages roomId={roomId} messages={initial} /> */}
         </div>
       </GridBody>
       <GridFooter className="px-1">

@@ -1,6 +1,3 @@
-import BadgeAmount from "@/components/badge-amount"
-import CopyContent from "@/components/copy-content"
-import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import {
   Sheet,
@@ -10,12 +7,10 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet"
-import db from "@/lib/db"
-import { formatDate } from "@/lib/utils"
 import { MessagesSquare } from "lucide-react"
 
 export default async function RoomList() {
-  const rooms = await db.chatRoom.findMany()
+  // const rooms = await db.chatRoom.findMany()
   return (
     <Sheet>
       <SheetTrigger asChild className="relative">
@@ -26,7 +21,7 @@ export default async function RoomList() {
               size={18}
               className="origin-bottom-left animate-pulse animate-normal animate-duration-1000 animate-once"
             />
-            <BadgeAmount amount={rooms.length} />
+            {/* <BadgeAmount amount={rooms.length} /> */}
           </span>
         </Button>
       </SheetTrigger>
@@ -38,7 +33,7 @@ export default async function RoomList() {
           </SheetDescription>
         </SheetHeader>
         <article className="mt-6 flex flex-col gap-3">
-          {rooms.map((room) => (
+          {/* {rooms.map((room) => (
             <div
               key={room.id}
               className="flex items-center justify-between gap-2"
@@ -55,7 +50,7 @@ export default async function RoomList() {
                 </span>
               </Badge>
             </div>
-          ))}
+          ))} */}
         </article>
       </SheetContent>
     </Sheet>

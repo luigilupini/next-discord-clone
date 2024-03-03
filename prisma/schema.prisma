@@ -9,96 +9,99 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
+  provider     = "mysql"
+  url          = env("DATABASE_URL")
+  relationMode = "prisma"
 }
 
-model User {
-  id            String         @id @default(cuid())
-  name          String?
-  email         String?        @unique
-  emailVerified DateTime?
-  image         String?
-  createdAt     DateTime       @default(now())
-  updatedAt     DateTime       @default(now()) @updatedAt
-  createdBy     String?
-  role_id       Int?           @default(4)
-  accounts      Account[]
-  sessions      Session[]
-  Message       Message[]
-  ChatRoomUser  ChatRoomUser[]
+model Profile {
+  id       String @id @default(uuid())
+  userId   String @unique
+  name     String
+  imageUrl String @db.Text
+  email    String @db.Text
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Returning relationship to our models
+  servers  Server[]
+  members  Member[]
+  channels Channel[]
 }
 
-model Account {
-  id                String  @id @default(cuid())
-  userId            String
-  type              String
-  provider          String
-  providerAccountId String
-  refresh_token     String?
-  access_token      String?
-  token_type        String?
-  scope             String?
-  id_token          String?
-  session_state     String?
-  expires_at        Int?
-  expires_in        Int?
-  ext_expires_in    Int?
-  user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+model Server {
+  id         String @id @default(uuid())
+  name       String
+  imageUrl   String @db.Text
+  inviteCode String @unique
 
-  @@unique([provider, providerAccountId])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Relationship to Profile
+  profileId String
+  profile   Profile @relation(fields: [profileId], references: [id], onDelete: Cascade)
+
+  // Returning relationship to our models
+  members  Member[]
+  channels Channel[]
+
+  @@index([profileId])
 }
 
-model Session {
-  id           String   @id @default(cuid())
-  sessionToken String   @unique
-  userId       String
-  expires      DateTime
-  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+// Every server is going to have a Member
+// And each member is going to have a role!
+// This is a many-to-many relationship
+enum MemberRole {
+  ADMIN
+  MODERATOR
+  GUEST
 }
 
-model VerificationToken {
-  identifier String?
-  token      String   @unique
-  expires    DateTime
-  email      String?
-  id         String   @id @default(cuid())
+model Member {
+  id   String     @id @default(uuid())
+  role MemberRole @default(GUEST)
 
-  @@unique([identifier, token])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Relationship to Profile
+  profileId String
+  profile   Profile @relation(fields: [profileId], references: [id], onDelete: Cascade)
+
+  // Relationship to Server they are a member of/in
+  serverId String
+  server   Server @relation(fields: [serverId], references: [id], onDelete: Cascade)
+
+  @@index([profileId])
+  @@index([serverId])
 }
 
-// suggests a many-to-many relationship
-// Between ChatRoom and User, where a chat room can have multiple users
-// And a user belong to multiple chat rooms.
-model ChatRoom {
-  id        String         @id @default(cuid())
-  createdAt DateTime       @default(now())
-  updatedAt DateTime       @updatedAt
-  messages  Message[]
-  users     ChatRoomUser[]
+// Channel model
+// Each channel modal needs a channel type
+enum ChannelType {
+  TEXT
+  AUDIO
+  VOICE
 }
 
-// For User many-to-one relationship
-// Where many Message's can be authored by one user.
-model Message {
-  id         String   @id @default(cuid())
-  createdAt  DateTime @default(now())
-  updatedAt  DateTime @updatedAt
-  text       String
-  chatRoomId String
-  chatRoom   ChatRoom @relation(fields: [chatRoomId], references: [id])
-  userId     String
-  user       User     @relation(fields: [userId], references: [id])
-}
+model Channel {
+  id   String      @id @default(uuid())
+  name String
+  type ChannelType @default(TEXT)
 
-// To facilitate a many-to-many relationship!
-// You need an intermediary table to hold references to both models.
-// This table will hold references to ChatRoom and User!
-model ChatRoomUser {
-  chatRoomId String
-  chatRoom   ChatRoom @relation(fields: [chatRoomId], references: [id])
-  userId     String
-  user       User     @relation(fields: [userId], references: [id])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
-  @@id([chatRoomId, userId]) // Composite primary key
+  // Relationship to Profile
+  profileId String
+  profile   Profile @relation(fields: [profileId], references: [id], onDelete: Cascade)
+
+  // Relationship to Server
+  serverId String
+  server   Server @relation(fields: [serverId], references: [id], onDelete: Cascade)
+
+  @@index([profileId])
+  @@index([serverId])
 }
