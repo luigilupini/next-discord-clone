@@ -61,7 +61,7 @@
     "livekit-server-sdk": "^1.2.6",
     "lucide-react": "^0.344.0",
     "moment-timezone": "^0.5.45",
-    "next": "13.4.12",
+    "next": "latest",
     "next-themes": "^0.2.1",
     "query-string": "^8.1.0",
     "react": "18.2.0",
