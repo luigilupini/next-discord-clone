@@ -1,10 +1,10 @@
 import Footer from "@/components/footer"
-import JoinForm from "@/components/form/join-form"
 import GridBase, {
   GridBody,
   GridFooter,
   GridHeader,
 } from "@/components/layout/grid"
+import InitialModal from "@/components/modal/initial-modal"
 import db from "@/lib/db"
 import { initialProfile } from "@/lib/initial-profile"
 import { redirect } from "next/navigation"
@@ -26,7 +26,7 @@ export default async function SetupPage() {
       </GridHeader>
       <GridBody className="-mt-2">
         <article className="relative flex size-full flex-col items-end justify-center gap-4 px-4">
-          <JoinForm />
+          <InitialModal />
         </article>
       </GridBody>
       <GridFooter>

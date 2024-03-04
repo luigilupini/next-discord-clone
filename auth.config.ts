@@ -5,9 +5,9 @@ import GoogleProvider from "next-auth/providers/google"
 export default {
   providers: [
     AzureADProvider({
-      clientId: process.env.AZURE_AD_CLIENT_ID,
-      clientSecret: process.env.AZURE_AD_CLIENT_SECRET,
-      tenantId: process.env.AZURE_AD_TENANT_ID,
+      tenantId: process.env.AUTH_AZURE_TENANT,
+      clientId: process.env.AUTH_AZURE_ID,
+      clientSecret: process.env.AUTH_AZURE_SECRET,
       authorization: {
         params: {
           scope:
@@ -19,8 +19,8 @@ export default {
       },
     }),
     GoogleProvider({
-      clientId: process.env.GOOGLE_CLIENT_ID!,
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
+      clientId: process.env.AUTH_GOOGLE_ID,
+      clientSecret: process.env.AUTH_GOOGLE_SECRET,
     }),
   ],
 } as NextAuthConfig

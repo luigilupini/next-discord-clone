@@ -5,15 +5,10 @@ import NextAuth from "next-auth"
 
 let sessionSub: string | undefined
 
-export const {
-  handlers: { GET, POST },
-  auth,
-  signIn,
-  signOut,
-} = NextAuth({
+export const { handlers, auth, signIn, signOut } = NextAuth({
+  ...authConfig,
   adapter: PrismaAdapter(prisma) as any,
   session: { strategy: "jwt" },
-  ...authConfig,
   callbacks: {
     // https://authjs.dev/guides/basics/callbacks#sign-in-callback
     async signIn({ user, account, email, credentials, profile }) {
