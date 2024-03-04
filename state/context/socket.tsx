@@ -29,16 +29,25 @@ export const SocketProvider = ({ children }: PropsWithChildren) => {
   const [isConnected, setIsConnected] = useState(false)
 
   useEffect(() => {
-    const socketInstance = new (IoClient as any)(
-      process.env.NEXT_PUBLIC_SITE_URL!,
-      {
-        path: "/api/socket/io",
-        addTrailingSlash: false,
-      },
-    )
-    socketInstance.on("connect", () => setIsConnected(true))
-    socketInstance.on("disconnect", () => setIsConnected(false))
-    console.log("socketInstance", socketInstance)
+    const socketInstance = new (IoClient as any)("http://localhost:3030")
+    socketInstance.on("connect", () => {
+      console.log(`🔌 connect: ${socketInstance.id}`)
+      setIsConnected(true)
+      // Sever listens on socket.on(client-ready)
+      socketInstance.emit("client-ready", {
+        message: "💬 message from client",
+      })
+    })
+    // Client listens on socket.on(server-event)
+    socketInstance.on("server-event", (data: any) => {
+      console.log("🧦 server-event:", data)
+    })
+
+    socketInstance.on("disconnect", () => {
+      console.log("Disconnected from socket server")
+      setIsConnected(false)
+    })
+
     setSocket(socketInstance)
 
     return () => {

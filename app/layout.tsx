@@ -13,13 +13,13 @@ export default async function RootLayout({ children }: PropsWithChildren) {
       className={cn("antialiased", rubik.className)}
       suppressHydrationWarning
     >
-      <body className="h-screen w-screen overflow-hidden">
+      <body className="relative h-screen w-screen overflow-hidden">
         <ProviderTree>
           <main className="mx-auto flex size-full max-w-5xl flex-col">
             {children}
-            <ThemeToggle />
           </main>
         </ProviderTree>
+        <ThemeToggle />
       </body>
     </html>
   )
