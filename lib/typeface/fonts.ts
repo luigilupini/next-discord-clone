@@ -1,5 +1,3 @@
-import { GeistMono } from "geist/font/mono"
-import { GeistSans } from "geist/font/sans"
 import {
   DM_Sans,
   Flow_Circular,
@@ -24,11 +22,6 @@ export const karla = Karla({
   variable: "--font-karla",
 })
 
-export const dm_sans = DM_Sans({
-  subsets: ["latin"],
-  variable: "--font-dm-sans",
-})
-
 export const flow = Flow_Circular({
   subsets: ["latin"],
   weight: "400",
@@ -39,9 +32,3 @@ export const jetbrains = JetBrains_Mono({
   subsets: ["latin"],
   variable: "--font-jetbrains-mono",
 })
-
-export const geist = GeistSans
-geist.variable = "--font-geist"
-
-export const geist_mono = GeistMono
-geist_mono.variable = "--font-geist-mono"
