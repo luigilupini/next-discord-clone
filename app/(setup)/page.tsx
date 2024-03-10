@@ -5,8 +5,8 @@ import GridBase, {
   GridHeader,
 } from "@/components/layout/grid"
 import InitialModal from "@/components/modal/initial-modal"
+import { initialProfile } from "@/lib/actions/initial-profile"
 import db from "@/lib/db"
-import { initialProfile } from "@/lib/initial-profile"
 import { redirect } from "next/navigation"
 
 export default async function SetupPage() {
