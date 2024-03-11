@@ -3,7 +3,7 @@ import { StateCreator, create } from "zustand"
 import { devtools } from "zustand/middleware"
 
 // Here we define all possible modals
-export type Type =
+export type ModalType =
   | "createServer"
   | "invite"
   | "editServer"
@@ -27,10 +27,10 @@ type Data = {
 
 // Our store type!
 type ModalStore = {
-  type: Type | null
+  type: ModalType | null
   data: Data
   isOpen: boolean
-  onOpen: (type: Type, data?: Data) => void
+  onOpen: (type: ModalType, data?: Data) => void
   onClose: () => void
 }
 
@@ -40,7 +40,7 @@ const createModalSlice: StateCreator<ModalStore> = (set) => ({
   data: {},
   isOpen: false,
   // Actions to manipulate state
-  onOpen: (type, data = {}) => set({ isOpen: true, type, data }),
+  onOpen: (type, data = {}) => set({ type, data, isOpen: true }),
   onClose: () => set({ type: null, isOpen: false }),
 })
 

@@ -23,7 +23,7 @@ export const ActionTooltip = ({ label, children, side, align }: Props) => {
         <TooltipContent
           side={side}
           align={align}
-          className="bg-muted text-muted-foreground"
+          className="bg-primary text-primary-foreground"
         >
           <span className="text-[11px] font-medium capitalize">
             {label.toLowerCase()}

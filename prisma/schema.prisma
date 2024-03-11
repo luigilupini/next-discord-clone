@@ -83,7 +83,7 @@ model Member {
 enum ChannelType {
   TEXT
   AUDIO
-  VOICE
+  VIDEO
 }
 
 model Channel {

@@ -15,6 +15,8 @@ export type Params = {
   id: string
   edit: string
   slug: string
+  serverId: string
+  inviteCode: string
 }
 
 export type ServerProps = {
