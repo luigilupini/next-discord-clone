@@ -1,5 +1,6 @@
 "use client"
 
+import CreateChannelModal from "@/components/modal/create-channel-modal"
 import CreateServerModal from "@/components/modal/create-server-modal"
 import EditServerModal from "@/components/modal/edit-server-modal"
 import InviteModal from "@/components/modal/invite-modal"
@@ -11,11 +12,11 @@ export const ModalProvider = () => {
   if (!mounted) return null
   return (
     <>
-      {/* Here we list all available modals application wide */}
       <CreateServerModal />
       <InviteModal />
       <EditServerModal />
       <MembersModal />
+      <CreateChannelModal />
     </>
   )
 }
