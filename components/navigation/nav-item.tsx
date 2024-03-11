@@ -31,7 +31,7 @@ export default function NavItem({ id, name, imageUrl }: Props) {
             serverId === id && "rounded-[16px] bg-primary/10 text-primary",
           )}
         >
-          <Image fill src={imageUrl} alt="channel" />
+          <Image fill src={imageUrl} alt="channel" className="object-cover" />
         </div>
       </button>
     </ActionTooltip>

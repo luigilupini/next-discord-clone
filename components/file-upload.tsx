@@ -18,7 +18,12 @@ export default function FileUpload({ endpoint, value, onChange }: Props) {
   if (value && fileType !== "pdf") {
     return (
       <div className="relative size-20">
-        <Image src={value} alt="image" className="rounded-full" layout="fill" />
+        <Image
+          src={value}
+          alt="image"
+          className="rounded-full object-cover"
+          layout="fill"
+        />
         <Button
           onClick={() => onChange("")}
           className="absolute right-0 top-0 size-fit rounded-full p-1"

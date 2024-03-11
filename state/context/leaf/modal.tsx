@@ -1,0 +1,15 @@
+"use client"
+
+import CreateServerModal from "@/components/modal/create-server-modal"
+import { useMounted } from "@/lib/hooks/use-mounted"
+
+export const ModalProvider = () => {
+  const mounted = useMounted()
+  if (!mounted) return null
+  return (
+    <>
+      {/* Here we list all available modals application wide */}
+      <CreateServerModal />
+    </>
+  )
+}

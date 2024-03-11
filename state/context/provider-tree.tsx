@@ -1,14 +1,16 @@
 "use client"
 
+import { PropsWithChildren } from "react"
+
 import { Toaster } from "@/components/ui/toaster"
-import { SocketProvider } from "@/state/context/socket"
-import ThemeProvider from "@/state/context/theme"
+import { useMounted } from "@/lib/hooks/use-mounted"
+import { SocketProvider } from "@/state/context/leaf/socket"
+import ThemeProvider from "@/state/context/leaf/theme"
 import { ClerkProvider } from "@clerk/nextjs"
-import { PropsWithChildren, useEffect, useState } from "react"
+import { ModalProvider } from "./leaf/modal"
 
 const ProviderTree = ({ children }: PropsWithChildren) => {
-  const [mounted, setMounted] = useState(false)
-  useEffect(() => setMounted(true), [])
+  const mounted = useMounted()
   if (!mounted) return null
   return (
     <ClerkProvider>
@@ -18,6 +20,7 @@ const ProviderTree = ({ children }: PropsWithChildren) => {
         enableSystem
         disableTransitionOnChange
       >
+        <ModalProvider />
         <SocketProvider>
           {children}
           <Toaster />

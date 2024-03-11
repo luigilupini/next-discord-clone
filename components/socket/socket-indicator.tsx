@@ -1,7 +1,7 @@
 "use client"
 
 import { Badge } from "@/components/ui/badge"
-import { useSocket } from "@/state/context/socket"
+import { useSocket } from "@/state/context/leaf/socket"
 
 export default function SocketIndicator() {
   const { isConnected } = useSocket()

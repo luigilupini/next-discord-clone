@@ -2,7 +2,8 @@ import { Channel, ChannelType, Server } from "@prisma/client"
 import { StateCreator, create } from "zustand"
 import { devtools } from "zustand/middleware"
 
-export type ModalType =
+// Here we define all possible modals
+export type Type =
   | "createServer"
   | "invite"
   | "editServer"
@@ -15,7 +16,8 @@ export type ModalType =
   | "messageFile"
   | "deleteMessage"
 
-type ModalData = {
+// Data that can be passed to a modal
+type Data = {
   server?: Server
   channel?: Channel
   channelType?: ChannelType
@@ -23,18 +25,21 @@ type ModalData = {
   query?: Record<string, any>
 }
 
+// Our store type!
 type ModalStore = {
-  type: ModalType | null
-  data: ModalData
+  type: Type | null
+  data: Data
   isOpen: boolean
-  onOpen: (type: ModalType, data?: ModalData) => void
+  onOpen: (type: Type, data?: Data) => void
   onClose: () => void
 }
 
 const createModalSlice: StateCreator<ModalStore> = (set) => ({
+  // Initial state
   type: null,
   data: {},
   isOpen: false,
+  // Actions to manipulate state
   onOpen: (type, data = {}) => set({ isOpen: true, type, data }),
   onClose: () => set({ type: null, isOpen: false }),
 })
