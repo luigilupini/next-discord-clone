@@ -22,7 +22,7 @@ export default async function Navbar() {
   })
 
   return (
-    <nav className="flex size-full flex-col items-center space-y-4 py-3">
+    <nav className="flex size-full flex-col items-center space-y-4 border-r py-2">
       <NavActions />
       <Separator className="mx-auto h-[2px] w-12 rounded-md bg-muted" />
       <ScrollArea className="w-full flex-1">

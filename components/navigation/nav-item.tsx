@@ -20,7 +20,7 @@ export default function NavItem({ id, name, imageUrl }: Props) {
       <button onClick={onClick} className="group relative flex items-center">
         <div
           className={cn(
-            "absolute left-0 w-[4px] rounded-r-full bg-foreground transition-all",
+            "absolute left-0 w-[4px] rounded-r-full bg-primary transition-all",
             serverId !== id && "group-hover:h-[20px]",
             serverId === id ? "h-[36px]" : "h-[8px]",
           )}
@@ -31,7 +31,12 @@ export default function NavItem({ id, name, imageUrl }: Props) {
             serverId === id && "rounded-[16px] bg-primary/10 text-primary",
           )}
         >
-          <Image fill src={imageUrl} alt="channel" className="object-cover" />
+          <Image
+            fill
+            src={imageUrl}
+            alt="channel"
+            className="object-cover shadow-sm"
+          />
         </div>
       </button>
     </ActionTooltip>

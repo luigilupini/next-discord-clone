@@ -61,6 +61,7 @@ export default async function ServerSidebar({ serverId }: Props) {
   const videoChannels = server?.channels.filter(
     (channel) => channel.type === ChannelType.VIDEO,
   )
+
   const members = server?.members.filter(
     (member) => member.profileId !== profile.id, // 👈🏻 exclude the current user
   )
@@ -69,7 +70,7 @@ export default async function ServerSidebar({ serverId }: Props) {
   )?.role
 
   return (
-    <nav className="flex h-full w-full flex-col bg-muted text-muted-foreground">
+    <nav className="flex h-full w-full flex-col border-r bg-muted text-muted-foreground">
       <ServerHeader server={server} role={role} />
     </nav>
   )

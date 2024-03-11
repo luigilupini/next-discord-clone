@@ -57,11 +57,12 @@ export default function InviteModal() {
           </DialogTitle>
         </DialogHeader>
         <div className="px-6 py-4">
-          <Label className="text-xs font-bold uppercase opacity-80">
+          <Label className="text-xs font-bold uppercase">
             Server invite link
           </Label>
           <div className="mt-2 flex items-center gap-x-2">
             <Input
+              autoFocus={false}
               disabled={isLoading}
               className="border-0 bg-muted text-muted-foreground focus-visible:ring-0 focus-visible:ring-offset-0"
               value={inviteUrl}
