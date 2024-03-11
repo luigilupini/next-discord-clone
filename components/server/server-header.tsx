@@ -37,7 +37,7 @@ export default function ServerHeader({ server, role }: Props) {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger className="focus:outline-none" asChild>
-        <button className="flex h-12 w-full items-center border-b px-3 text-sm font-semibold transition hover:bg-primary/10">
+        <button className="flex h-12 w-full items-center border-b px-3 text-sm font-semibold opacity-70 transition hover:bg-muted/20 hover:opacity-100">
           {server.name}
           <ChevronDown className="ml-auto size-5" />
         </button>
