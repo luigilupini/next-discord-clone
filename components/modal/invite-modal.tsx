@@ -1,20 +1,20 @@
 "use client"
 
+import { Button } from "@/components/ui/button"
 import {
   Dialog,
   DialogContent,
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog"
+import { Input } from "@/components/ui/input"
+import { Label } from "@/components/ui/label"
 import { useOrigin } from "@/lib/hooks/use-origin"
 import { delay } from "@/lib/utils"
 import useModalStore from "@/state/zustand/modal-store"
 import axios from "axios"
 import { Check, Copy, RefreshCw } from "lucide-react"
 import { useState } from "react"
-import { Button } from "../ui/button"
-import { Input } from "../ui/input"
-import { Label } from "../ui/label"
 
 export default function InviteModal() {
   const { isOpen, onOpen, onClose, type, data } = useModalStore()
