@@ -15,11 +15,9 @@ export default async function RootLayout({ children }: PropsWithChildren) {
     >
       <body className="relative h-screen w-screen overflow-hidden">
         <ProviderTree>
-          <main className="mx-auto flex size-full max-w-5xl flex-col">
-            {children}
-          </main>
+          <main className="size-full">{children}</main>
+          <ThemeToggle />
         </ProviderTree>
-        <ThemeToggle />
       </body>
     </html>
   )

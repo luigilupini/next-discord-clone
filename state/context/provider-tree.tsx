@@ -1,13 +1,15 @@
 "use client"
 
 import { Toaster } from "@/components/ui/toaster"
-import { TooltipProvider } from "@/components/ui/tooltip"
 import { SocketProvider } from "@/state/context/socket"
 import ThemeProvider from "@/state/context/theme"
 import { ClerkProvider } from "@clerk/nextjs"
-import { PropsWithChildren } from "react"
+import { PropsWithChildren, useEffect, useState } from "react"
 
 const ProviderTree = ({ children }: PropsWithChildren) => {
+  const [mounted, setMounted] = useState(false)
+  useEffect(() => setMounted(true), [])
+  if (!mounted) return null
   return (
     <ClerkProvider>
       <ThemeProvider
@@ -17,11 +19,8 @@ const ProviderTree = ({ children }: PropsWithChildren) => {
         disableTransitionOnChange
       >
         <SocketProvider>
-          <TooltipProvider>
-            {children}
-
-            <Toaster />
-          </TooltipProvider>
+          {children}
+          <Toaster />
         </SocketProvider>
       </ThemeProvider>
     </ClerkProvider>
