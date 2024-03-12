@@ -16,6 +16,7 @@ export type Params = {
   edit: string
   slug: string
   serverId: string
+  channelId: string
   inviteCode: string
 }
 

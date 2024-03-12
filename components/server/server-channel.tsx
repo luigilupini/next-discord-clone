@@ -28,13 +28,12 @@ export const ServerChannel = ({ channel, server, role }: Props) => {
 
   const Icon = iconMap[channel.type]
 
-  const onClick = () => {
-    router.push(`/servers/${params?.serverId}/channels/${channel.id}`)
-  }
-
   const onAction = (e: React.MouseEvent, action: ModalType) => {
     e.stopPropagation()
     onOpen(action, { channel, server })
+  }
+  const onClick = () => {
+    router.push(`/servers/${params?.serverId}/channels/${channel.id}`)
   }
 
   return (
@@ -43,17 +42,12 @@ export const ServerChannel = ({ channel, server, role }: Props) => {
       variant="ghost"
       size="sm"
       className={cn(
-        "group my-1 flex w-full items-center justify-start gap-x-2 rounded-md p-2 text-card-foreground/60 transition hover:text-card-foreground",
-        params?.channelId === channel.id && "bg-destructive",
+        "group my-1 flex w-full items-center justify-start gap-x-2 rounded-md p-2 text-card-foreground/70 transition hover:text-card-foreground",
+        params?.channelId === channel.id && "bg-primary/20 text-primary/90",
       )}
     >
       <Icon className="size-4 flex-shrink-0" />
-      <p
-        className={cn(
-          "line-clamp-1 text-[13px] font-medium lowercase",
-          params?.channelId === channel.id && "text-destructive-foreground",
-        )}
-      >
+      <p className="line-clamp-1 text-[13px] font-medium lowercase">
         {channel.name}
       </p>
 
