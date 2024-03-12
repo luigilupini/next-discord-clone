@@ -20,8 +20,8 @@ const ProviderTree = ({ children }: PropsWithChildren) => {
         enableSystem
         disableTransitionOnChange
       >
-        <ModalProvider />
         <SocketProvider>
+          <ModalProvider />
           {children}
           <Toaster />
         </SocketProvider>

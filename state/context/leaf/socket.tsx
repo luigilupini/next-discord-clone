@@ -1,5 +1,3 @@
-"use client"
-
 import {
   PropsWithChildren,
   createContext,
@@ -8,50 +6,52 @@ import {
   useState,
 } from "react"
 
-import { io as IoClient } from "socket.io-client"
+import { io as ioClient } from "socket.io-client"
+import { Socket } from "socket.io-client/build/esm/socket"
 
-type SocketContextType = {
-  socket: any | null
+const socket: Socket = ioClient("http://localhost:3030")
+
+type ContextType = {
+  socket: Socket
   isConnected: boolean
 }
 
-const SocketContext = createContext<SocketContextType>({
-  socket: null,
+// Initialize with a socket connection
+const SocketContext = createContext<ContextType>({
+  socket: socket,
   isConnected: false,
 })
 
-export const useSocket = () => {
-  return useContext(SocketContext)
-}
-
 export const SocketProvider = ({ children }: PropsWithChildren) => {
-  const [socket, setSocket] = useState(null)
   const [isConnected, setIsConnected] = useState(false)
 
   useEffect(() => {
-    const socketInstance = new (IoClient as any)("http://localhost:3030")
-    socketInstance.on("connect", () => {
-      console.log(`🔌 connect: ${socketInstance.id}`)
+    const onConnect = () => {
+      console.log(`🔌 connect: ${socket.id}`)
       setIsConnected(true)
-      // Sever listens on socket.on(client-ready)
-      socketInstance.emit("client-ready", {
-        message: "💬 message from client",
-      })
-    })
-    // Client listens on socket.on(server-event)
-    socketInstance.on("server-event", (data: any) => {
-      console.log("🧦 server-event:", data)
-    })
+    }
 
-    socketInstance.on("disconnect", () => {
+    const onDisconnect = () => {
       console.log("Disconnected from socket server")
       setIsConnected(false)
-    })
+    }
 
-    setSocket(socketInstance)
+    // Server listens on socket.on(client-ready)
+    const onServer = (data: any) => {
+      console.log("🧦 server-event:", data)
+    }
 
+    socket.on("connect", onConnect)
+    socket.on("disconnect", onDisconnect)
+    socket.on("server-event", onServer)
+
+    // Return to cleanup any open connections to the socket server
     return () => {
-      socketInstance.disconnect()
+      socket.off("connect", onConnect)
+      socket.off("disconnect", onDisconnect)
+      socket.off("server-event", onServer)
+      // Ensure isConnected is false when the component unmounts
+      setIsConnected(false)
     }
   }, [])
 
@@ -61,3 +61,5 @@ export const SocketProvider = ({ children }: PropsWithChildren) => {
     </SocketContext.Provider>
   )
 }
+
+export const useSocket = () => useContext(SocketContext)
