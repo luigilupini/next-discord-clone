@@ -1,7 +1,7 @@
 "use client"
 
 import { Member, MemberRole, Profile, Server } from "@prisma/client"
-import { ShieldAlert, ShieldCheck } from "lucide-react"
+import { Lock, ShieldCheck } from "lucide-react"
 import { useParams, useRouter } from "next/navigation"
 
 import UserAvatar from "@/components/user-avatar"
@@ -15,13 +15,11 @@ interface ServerMemberProps {
 
 const roleIconMap = {
   [MemberRole.GUEST]: null,
-  [MemberRole.MODERATOR]: (
-    <ShieldCheck className="ml-2 h-4 w-4 text-indigo-500" />
-  ),
-  [MemberRole.ADMIN]: <ShieldAlert className="ml-2 h-4 w-4 text-rose-500" />,
+  [MemberRole.MODERATOR]: <ShieldCheck className="ml-2 size-4 text-primary" />,
+  [MemberRole.ADMIN]: <Lock className="ml-2 size-4 text-destructive" />,
 }
 
-export const ServerMember = ({ member, server }: ServerMemberProps) => {
+export const ServerMember = ({ member }: ServerMemberProps) => {
   const params = useParams()
   const router = useRouter()
 
@@ -35,18 +33,14 @@ export const ServerMember = ({ member, server }: ServerMemberProps) => {
     <Button
       onClick={onClick}
       variant="ghost"
+      size="sm"
       className={cn(
-        "group my-1 mb-1 flex w-full items-center justify-start gap-x-2 rounded-md px-2 py-2 text-card-foreground/60 hover:text-card-foreground",
-        params?.memberId === member.id && "bg-destructive",
+        "group my-1 flex w-full items-center justify-start gap-x-2 rounded-md p-2 text-card-foreground/70 transition hover:bg-primary/10 hover:text-primary/80",
+        params?.memberId === member.id && "bg-primary/20 text-primary/90",
       )}
     >
       <UserAvatar src={member.profile.imageUrl} className="size-5" />
-      <p
-        className={cn(
-          "text-[13px] font-medium",
-          params?.memberId === member.id && "text-destructive-foreground",
-        )}
-      >
+      <p className="text-[13px] font-medium opacity-90">
         {member.profile.name}
       </p>
       {icon}

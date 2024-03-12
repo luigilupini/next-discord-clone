@@ -9,6 +9,7 @@ export type SearchParams = {
   orderBy?: string
   viewBy?: string
   viewAs?: string
+  video?: boolean
 }
 
 export type Params = {
@@ -18,6 +19,7 @@ export type Params = {
   serverId: string
   channelId: string
   inviteCode: string
+  memberId: string
 }
 
 export type ServerProps = {

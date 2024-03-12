@@ -74,6 +74,12 @@ model Member {
   serverId String
   server   Server @relation(fields: [serverId], references: [id], onDelete: Cascade)
 
+  // Returning relationship to our models
+  messages               Message[]
+  conversationsInitiated Conversation[]  @relation("MemberOne")
+  conversationsReceived  Conversation[]  @relation("MemberTwo")
+  DirectMessage          DirectMessage[]
+
   @@index([profileId])
   @@index([serverId])
 }
@@ -102,6 +108,69 @@ model Channel {
   serverId String
   server   Server @relation(fields: [serverId], references: [id], onDelete: Cascade)
 
+  // Returning relationship to our models
+  messages Message[]
+
   @@index([profileId])
   @@index([serverId])
+}
+
+model Message {
+  id      String  @id @default(uuid())
+  content String  @db.Text
+  fileUrl String? @db.Text
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Relationship to Member
+  memberId String
+  member   Member @relation(fields: [memberId], references: [id], onDelete: Cascade)
+
+  // Relationship to Channel
+  channelId String
+  channel   Channel @relation(fields: [channelId], references: [id], onDelete: Cascade)
+
+  deteled Boolean @default(false)
+
+  @@index([memberId])
+  @@index([channelId])
+}
+
+model Conversation {
+  id String @id @default(uuid())
+
+  // Two way communication between two members in a conversation
+  memberOneId String
+  memberOne   Member @relation("MemberOne", fields: [memberOneId], references: [id], onDelete: Cascade)
+
+  memberTwoId String
+  memberTwo   Member @relation("MemberTwo", fields: [memberTwoId], references: [id], onDelete: Cascade)
+
+  // Returning relationship to our models
+  directMessages DirectMessage[]
+
+  // Unique ensures that we can't have the same conversation twice between the same two members
+  @@unique([memberOneId, memberTwoId])
+  @@index([memberTwoId])
+}
+
+model DirectMessage {
+  id      String  @id @default(uuid())
+  content String  @db.Text
+  fileUrl String? @db.Text
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  memberId String
+  member   Member @relation(fields: [memberId], references: [id], onDelete: Cascade)
+
+  conversationId String
+  conversation   Conversation @relation(fields: [conversationId], references: [id], onDelete: Cascade)
+
+  deleted Boolean @default(false)
+
+  @@index([memberId])
+  @@index([conversationId])
 }

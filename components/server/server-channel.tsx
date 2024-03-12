@@ -42,12 +42,12 @@ export const ServerChannel = ({ channel, server, role }: Props) => {
       variant="ghost"
       size="sm"
       className={cn(
-        "group my-1 flex w-full items-center justify-start gap-x-2 rounded-md p-2 text-card-foreground/70 transition hover:text-card-foreground",
+        "group my-1 flex w-full items-center justify-start gap-x-2 rounded-md p-2 text-card-foreground/70 transition hover:bg-primary/10 hover:text-primary/80",
         params?.channelId === channel.id && "bg-primary/20 text-primary/90",
       )}
     >
       <Icon className="size-4 flex-shrink-0" />
-      <p className="line-clamp-1 text-[13px] font-medium lowercase">
+      <p className="line-clamp-1 text-[13px] font-medium lowercase opacity-90">
         {channel.name}
       </p>
 

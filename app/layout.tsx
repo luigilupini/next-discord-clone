@@ -1,4 +1,4 @@
-import { ThemeToggle } from "@/components/theme-toggle"
+// import { ThemeToggle } from "@/components/theme-toggle"
 import { rubik } from "@/lib/typeface/fonts"
 import { cn } from "@/lib/utils"
 import ProviderTree from "@/state/context/provider-tree"
@@ -16,7 +16,7 @@ export default async function RootLayout({ children }: PropsWithChildren) {
       <body className="relative h-screen w-screen overflow-hidden">
         <ProviderTree>
           <main className="size-full">{children}</main>
-          <ThemeToggle />
+          {/* <ThemeToggle /> */}
         </ProviderTree>
       </body>
     </html>
