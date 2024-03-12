@@ -36,7 +36,7 @@ import {
 } from "@/components/ui/dropdown-menu"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import UserAvatar from "@/components/user-avatar"
-import useModalStore from "@/state/zustand/modal-store"
+import useModalStore from "@/state/zustand/use-modal-store"
 import { ServerWithMembersWithProfiles } from "@/types"
 
 const roleIconMap = {

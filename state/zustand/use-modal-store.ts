@@ -27,9 +27,11 @@ type Data = {
 
 // Our store type!
 type ModalStore = {
+  // Initial state
   type: ModalType | null
   data: Data
   isOpen: boolean
+  // Actions to manipulate state
   onOpen: (type: ModalType, data?: Data) => void
   onClose: () => void
 }

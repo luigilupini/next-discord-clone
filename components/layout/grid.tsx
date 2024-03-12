@@ -1,12 +1,12 @@
 import { cn } from "@/lib/utils"
-import useLayoutStore, { LayoutType } from "@/state/zustand/grid-store"
+import useGridStore, { GridType } from "@/state/zustand/use-grid-store"
 import { PropsWithChildren } from "react"
 
 // Define the props type
 type Props = PropsWithChildren<{
   className?: string
   ping?: boolean
-  layout: LayoutType
+  layout: GridType
 }>
 
 // Our main GridBase component
@@ -16,8 +16,8 @@ export default function GridBase({
   ping = false,
   layout,
 }: Props) {
-  useLayoutStore.getState().setLayout(layout)
-  const base = useLayoutStore.getState().layoutStyles.base
+  useGridStore.getState().setLayout(layout)
+  const base = useGridStore.getState().layoutStyles.base
   return (
     <main
       className={cn("overflow-hidden", base, className, {
@@ -36,7 +36,7 @@ type ChildProps = PropsWithChildren<{
 
 // Standalone component
 export function GridHeader({ children, className, ping = false }: ChildProps) {
-  const header = useLayoutStore.getState().layoutStyles.header
+  const header = useGridStore.getState().layoutStyles.header
   return (
     <header
       className={cn(`flex items-center justify-between ${header}`, className, {
@@ -50,7 +50,7 @@ export function GridHeader({ children, className, ping = false }: ChildProps) {
 
 // Standalone component
 export function GridBody({ children, className, ping = false }: ChildProps) {
-  const body = useLayoutStore.getState().layoutStyles.body
+  const body = useGridStore.getState().layoutStyles.body
   return (
     <section className={cn("overflow-hidden", body, className, { ping: ping })}>
       {children}
@@ -60,7 +60,7 @@ export function GridBody({ children, className, ping = false }: ChildProps) {
 
 // Standalone component
 export function GridFooter({ children, className, ping = false }: ChildProps) {
-  const footer = useLayoutStore.getState().layoutStyles.footer
+  const footer = useGridStore.getState().layoutStyles.footer
   return (
     <footer
       className={cn("overflow-hidden", footer, className, { ping: ping })}
@@ -76,7 +76,7 @@ export async function GridSide({
   className,
   ping = false,
 }: ChildProps) {
-  const side = useLayoutStore.getState().layoutStyles.aside
+  const side = useGridStore.getState().layoutStyles.aside
   return (
     <aside className={cn("overflow-hidden", side, className, { ping: ping })}>
       {children}
@@ -86,7 +86,7 @@ export async function GridSide({
 
 // Standalone component
 export function GridEnd({ children, className, ping = false }: ChildProps) {
-  const end = useLayoutStore.getState().layoutStyles.end
+  const end = useGridStore.getState().layoutStyles.end
   return (
     <aside className={cn("overflow-hidden", end, className, { ping: ping })}>
       {children}

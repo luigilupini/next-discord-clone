@@ -1,7 +1,7 @@
 "use client"
 
 import { ActionTooltip } from "@/components/action-tooltip"
-import useModalStore from "@/state/zustand/modal-store"
+import useModalStore from "@/state/zustand/use-modal-store"
 import { Plus } from "lucide-react"
 
 export default function NavActions() {

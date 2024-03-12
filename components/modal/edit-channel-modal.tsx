@@ -29,7 +29,7 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { ChannelType } from "@prisma/client"
 import { SelectValue } from "@radix-ui/react-select"
 import axios from "axios"
-import { useParams, useRouter } from "next/navigation"
+import { useRouter } from "next/navigation"
 import qs from "query-string"
 import { useEffect } from "react"
 import { useForm } from "react-hook-form"
@@ -45,45 +45,43 @@ const formSchema = z.object({
   type: z.nativeEnum(ChannelType),
 })
 
-export default function CreateChannelModal() {
+export default function EditChannelModal() {
   const { isOpen, onClose, type, data } = useModalStore()
-  const isModalOpen = isOpen && type === "createChannel"
-  const { channelType } = data
+  const isModalOpen = isOpen && type === "editChannel"
+  const { channel, server } = data
 
   const router = useRouter()
-  const params = useParams()
 
   // Create a form instance with zod resolver 🧪
   const form = useForm({
     resolver: zodResolver(formSchema),
     defaultValues: {
       name: "",
-      type: channelType || ChannelType.TEXT,
+      type: channel?.type || ChannelType.TEXT,
     },
   })
 
   useEffect(() => {
-    if (channelType) {
-      form.setValue("type", channelType)
-    } else {
-      form.setValue("type", ChannelType.TEXT)
+    if (channel) {
+      form.setValue("name", channel.name)
+      form.setValue("type", channel?.type)
     }
-  }, [channelType, form])
+  }, [form, channel])
 
   // Lets extract the Loading state from the schema!
   const isLoading = form.formState.isSubmitting
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
       const url = qs.stringifyUrl({
-        url: "/api/channels",
-        query: { serverId: params.serverId },
+        url: `/api/channels/${channel?.id}`,
+        query: { serverId: server?.id },
       })
-      await axios.post(url, values)
+      await axios.patch(url, values)
       form.reset()
       router.refresh()
       onClose()
     } catch (error) {
-      console.error("[CREATE_CHANNEL_MODAL]", error)
+      console.error("[EDIT_CHANNEL_MODAL]", error)
       throw new Error("Something went wrong while creating your channel")
     }
   }
@@ -98,7 +96,7 @@ export default function CreateChannelModal() {
       <DialogContent className="overflow-hidden bg-card p-0 text-card-foreground">
         <DialogHeader className="px-6 pt-8">
           <DialogTitle className="text-center text-2xl font-bold">
-            Create Channel
+            Edit Channel
           </DialogTitle>
         </DialogHeader>
 
@@ -168,7 +166,7 @@ export default function CreateChannelModal() {
 
             <DialogFooter className="bg-muted/40 px-6 py-4">
               <Button type="submit" disabled={isLoading} variant="default">
-                {isLoading ? "Creating..." : "Create Channel"}
+                {isLoading ? "Editing..." : "Edit Channel"}
               </Button>
             </DialogFooter>
           </form>

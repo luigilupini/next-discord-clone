@@ -2,9 +2,9 @@ import styles from "@/components/layout/grid.module.css"
 import { create, StateCreator } from "zustand"
 import { devtools } from "zustand/middleware"
 
-export type LayoutType = "basic" | "aside" | "balanced"
+export type GridType = "basic" | "aside" | "balanced"
 
-type LayoutStyles = {
+type gridStyles = {
   base: string
   header: string
   body: string
@@ -13,14 +13,14 @@ type LayoutStyles = {
   end?: string
 }
 
-type LayoutState = {
-  layout: LayoutType
-  layoutStyles: LayoutStyles
-  setLayout: (layout: LayoutType) => void
+type GridState = {
+  layout: GridType
+  layoutStyles: gridStyles
+  setLayout: (layout: GridType) => void
 }
 
 // Function to get styles based on layout
-const getLayoutStyles = (layout: LayoutType): LayoutStyles => {
+const getLayoutStyles = (layout: GridType): gridStyles => {
   switch (layout) {
     case "basic":
       return {
@@ -56,16 +56,16 @@ const getLayoutStyles = (layout: LayoutType): LayoutStyles => {
   }
 }
 
-const createLayoutSlice: StateCreator<LayoutState> = (set, get) => ({
+const createGridSlice: StateCreator<GridState> = (set, get) => ({
   layout: "basic",
   layoutStyles: getLayoutStyles("basic"),
-  setLayout: (layout: LayoutType) =>
+  setLayout: (layout: GridType) =>
     set({
       layout,
       layoutStyles: getLayoutStyles(layout),
     }),
 })
 
-const useLayoutStore = create(devtools(createLayoutSlice, "LayoutStore" as any))
+const useGridStore = create(devtools(createGridSlice, "GridStore" as any))
 
-export default useLayoutStore
+export default useGridStore

@@ -19,13 +19,13 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-import useModalStore from "@/state/zustand/modal-store"
+import useModalStore from "@/state/zustand/use-modal-store"
 
 type Props = {
   server: ServerWithMembersWithProfiles
   role?: MemberRole
 }
-
+// has the figures been issused and has the attorney been instructed, and if so can we have the name of the attorney
 export default function ServerHeader({ server, role }: Props) {
   const { onOpen } = useModalStore()
   // Both admins and moderators can invite people to the server
@@ -37,7 +37,7 @@ export default function ServerHeader({ server, role }: Props) {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger className="focus:outline-none" asChild>
-        <button className="flex h-12 w-full items-center border-b px-3 text-sm font-semibold opacity-70 transition hover:bg-muted/20 hover:opacity-100">
+        <button className="flex h-12 w-full items-center border-b px-3 text-sm font-semibold transition hover:bg-muted/50">
           {server.name}
           <ChevronDown className="ml-auto size-5" />
         </button>

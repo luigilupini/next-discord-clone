@@ -12,22 +12,32 @@ import {
 import useModalStore from "@/state/zustand/use-modal-store"
 import axios from "axios"
 import { useRouter } from "next/navigation"
+import qs from "query-string"
 import { useState } from "react"
 
-export default function LeaveServerModal() {
+export default function DeleteChannelModal() {
   const { isOpen, onOpen, onClose, type, data } = useModalStore()
-  const isModalOpen = isOpen && type === "leaveServer"
-  const { server } = data
+  const isModalOpen = isOpen && type === "deleteChannel"
+  const { server, channel } = data
+
   const router = useRouter()
+
   const [isLoading, setIsLoading] = useState(false)
 
   const onClick = async () => {
     try {
       setIsLoading(true)
-      await axios.patch(`/api/servers/${server?.id}/leave`)
+      const url = qs.stringifyUrl({
+        url: `/api/channels/${channel?.id}`,
+        query: {
+          serverId: server?.id,
+        },
+      })
+      console.log(url)
+      await axios.delete(url)
       onClose()
+      router.push(`/servers/${server?.id}`)
       router.refresh()
-      router.push("/")
     } catch (error) {
       console.log(error)
     } finally {
@@ -39,11 +49,11 @@ export default function LeaveServerModal() {
       <DialogContent className="overflow-hidden bg-card p-0 text-card-foreground">
         <DialogHeader className="px-6 pt-8">
           <DialogTitle className="text-center text-2xl font-bold">
-            Leave Server
+            Leave Channel
           </DialogTitle>
           <DialogDescription className="text-center opacity-70">
             Are you sure you want to leave{" "}
-            <span className="font-semibold text-primary">{server?.name}</span>?
+            <span className="font-semibold text-primary">{channel?.name}</span>?
           </DialogDescription>
         </DialogHeader>
         <DialogFooter className="bg-muted/40 px-6 py-4">

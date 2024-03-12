@@ -83,21 +83,20 @@ export default function ServerSearch({ data }: Props) {
               <CommandGroup
                 key={label}
                 heading={label}
-                className="m-1 rounded-md border border-dashed bg-popover text-xs text-popover-foreground"
+                className="hover:bg-popover-hover m-1 rounded-md border border-dashed bg-popover text-xs"
               >
                 {data?.map(({ id, icon, name }) => {
                   return (
-                    <article key={id} className="relative">
-                      <CommandItem
-                        onSelect={() => onClick({ id, type })}
-                        className="relative h-9 cursor-pointer"
-                      >
-                        <span className="ml-6 text-xs">{name}</span>
-                      </CommandItem>
-                      <span className="absolute left-2 top-1/2 -translate-y-1/2">
+                    <CommandItem
+                      key={id}
+                      onSelect={() => onClick({ id, type })}
+                      className="relative h-9 cursor-pointer"
+                    >
+                      <span className="ml-5 text-xs">{name}</span>
+                      <span className="absolute left-1 top-1/2 -translate-y-1/2 scale-75">
                         {icon}
                       </span>
-                    </article>
+                    </CommandItem>
                   )
                 })}
               </CommandGroup>
