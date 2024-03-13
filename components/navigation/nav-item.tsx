@@ -36,6 +36,8 @@ export default function NavItem({ id, name, imageUrl }: Props) {
             src={imageUrl}
             alt="channel"
             className="object-cover shadow-sm"
+            priority
+            sizes="68px"
           />
         </div>
       </button>

@@ -4,7 +4,6 @@ import { PropsWithChildren } from "react"
 
 import { Toaster } from "@/components/ui/toaster"
 import { useMounted } from "@/lib/hooks/use-mounted"
-import { SocketProvider } from "@/state/context/leaf/socket"
 import ThemeProvider from "@/state/context/leaf/theme"
 import { ClerkProvider } from "@clerk/nextjs"
 import { ModalProvider } from "./leaf/modal"
@@ -20,11 +19,9 @@ const ProviderTree = ({ children }: PropsWithChildren) => {
         enableSystem
         disableTransitionOnChange
       >
-        <SocketProvider>
-          <ModalProvider />
-          {children}
-          <Toaster />
-        </SocketProvider>
+        <ModalProvider />
+        {children}
+        <Toaster />
       </ThemeProvider>
     </ClerkProvider>
   )

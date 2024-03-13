@@ -69,7 +69,7 @@ export const ServerChannel = ({ channel, server, role }: Props) => {
       )}
       {channel.name === "general" && (
         <ActionTooltip label="Locked">
-          <Lock className="ml-auto size-3 fill-primary/30 text-primary" />
+          <Lock className="ml-auto hidden size-3 fill-primary/30 hover:text-primary group-hover:block" />
         </ActionTooltip>
       )}
     </Button>

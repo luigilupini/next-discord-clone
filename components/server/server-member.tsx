@@ -1,7 +1,7 @@
 "use client"
 
 import { Member, MemberRole, Profile, Server } from "@prisma/client"
-import { Lock, ShieldCheck } from "lucide-react"
+import { ShieldAlert, ShieldCheck, User } from "lucide-react"
 import { useParams, useRouter } from "next/navigation"
 
 import UserAvatar from "@/components/user-avatar"
@@ -14,9 +14,15 @@ interface ServerMemberProps {
 }
 
 const roleIconMap = {
-  [MemberRole.GUEST]: null,
-  [MemberRole.MODERATOR]: <ShieldCheck className="ml-2 size-4 text-primary" />,
-  [MemberRole.ADMIN]: <Lock className="ml-2 size-4 text-destructive" />,
+  [MemberRole.GUEST]: (
+    <User className="ml-auto hidden size-3 fill-primary/30 hover:text-primary group-hover:block" />
+  ),
+  [MemberRole.MODERATOR]: (
+    <ShieldCheck className="ml-auto hidden size-3 fill-primary/30 hover:text-primary group-hover:block" />
+  ),
+  [MemberRole.ADMIN]: (
+    <ShieldAlert className="ml-auto hidden size-3 fill-primary/30 hover:text-primary group-hover:block" />
+  ),
 }
 
 export const ServerMember = ({ member }: ServerMemberProps) => {
