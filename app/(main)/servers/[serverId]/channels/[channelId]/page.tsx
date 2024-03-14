@@ -40,7 +40,7 @@ export default async function ChannelIdPage({ params }: Props) {
         member={member}
         chatId={channel.id}
         apiUrl="/api/messages"
-        socketUrl="/api/socket"
+        socketUrl="/api/socket/messages"
         socketQuery={{
           channelId: channel.id,
           serverId: channel.serverId,

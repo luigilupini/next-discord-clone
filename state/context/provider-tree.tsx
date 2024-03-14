@@ -4,9 +4,11 @@ import { PropsWithChildren } from "react"
 
 import { Toaster } from "@/components/ui/toaster"
 import { useMounted } from "@/lib/hooks/use-mounted"
+import { ModalProvider } from "@/state/context/leaf/modal"
+import { QueryProvider } from "@/state/context/leaf/query"
 import ThemeProvider from "@/state/context/leaf/theme"
+
 import { ClerkProvider } from "@clerk/nextjs"
-import { ModalProvider } from "./leaf/modal"
 
 const ProviderTree = ({ children }: PropsWithChildren) => {
   const mounted = useMounted()
@@ -19,8 +21,10 @@ const ProviderTree = ({ children }: PropsWithChildren) => {
         enableSystem
         disableTransitionOnChange
       >
-        <ModalProvider />
-        {children}
+        <QueryProvider>
+          <ModalProvider />
+          {children}
+        </QueryProvider>
         <Toaster />
       </ThemeProvider>
     </ClerkProvider>

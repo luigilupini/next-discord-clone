@@ -43,6 +43,7 @@ export default function ChatInput({ apiUrl, query, name, type }: Props) {
         url: apiUrl,
         query: query,
       })
+      // console.log(url)
       const response = await axios.post(url, values)
       // console.log(response.data)
       form.reset()
