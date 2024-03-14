@@ -3,7 +3,7 @@
 import { Button } from "@/components/ui/button"
 import { UploadDropzone } from "@/lib/uploadthing"
 import "@uploadthing/react/styles.css"
-import { X } from "lucide-react"
+import { FileIcon, X } from "lucide-react"
 import Image from "next/image"
 
 type Props = {
@@ -34,6 +34,28 @@ export default function FileUpload({ endpoint, value, onChange }: Props) {
         >
           <X className="size-4" />
         </Button>
+      </div>
+    )
+  }
+  if (value && fileType === "pdf") {
+    return (
+      <div className="relative mt-2 flex items-center rounded-md bg-background/20 p-2">
+        <FileIcon className="size-10 fill-primary/20 stroke-primary" />
+        <a
+          href={value}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="ml-2 text-xs text-primary/40 hover:underline"
+        >
+          {value}
+        </a>
+        <button
+          onClick={() => onChange("")}
+          className="absolute -right-2 -top-2 rounded-full bg-destructive p-1 text-destructive-foreground shadow-sm"
+          type="button"
+        >
+          <X className="size-4" />
+        </button>
       </div>
     )
   }

@@ -8,6 +8,7 @@ import EditServerModal from "@/components/modal/edit-server-modal"
 import InviteModal from "@/components/modal/invite-modal"
 import LeaveServerModal from "@/components/modal/leave-server-modal"
 import MembersModal from "@/components/modal/members-modal"
+import MessageFileModal from "@/components/modal/message-file-modal"
 
 import { useMounted } from "@/lib/hooks/use-mounted"
 
@@ -24,6 +25,7 @@ export const ModalProvider = () => {
       <LeaveServerModal />
       <DeleteChannelModal />
       <EditChannelModal />
+      <MessageFileModal />
     </>
   )
 }

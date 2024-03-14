@@ -2,7 +2,7 @@ import { io as ioClient, Socket } from "socket.io-client"
 import { create, StateCreator } from "zustand"
 import { devtools } from "zustand/middleware"
 
-export type Namespace = "" | "socket" | "messages"
+export type Namespace = "" | "socket" | "channel"
 
 type SocketStore = {
   socket: Socket | null

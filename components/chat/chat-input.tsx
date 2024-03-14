@@ -12,7 +12,7 @@ import EmojiPicker from "@/components/emoji-picker"
 import { Button } from "@/components/ui/button"
 import { Form, FormControl, FormField, FormItem } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
-import useModal from "@/state/zustand/use-modal-store"
+import useModalStore from "@/state/zustand/use-modal-store"
 
 type Props = {
   name: string
@@ -26,7 +26,7 @@ const formSchema = z.object({
 })
 
 export default function ChatInput({ apiUrl, query, name, type }: Props) {
-  const { onOpen } = useModal()
+  const { onOpen } = useModalStore()
   const router = useRouter()
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -38,12 +38,13 @@ export default function ChatInput({ apiUrl, query, name, type }: Props) {
   const isLoading = form.formState.isSubmitting
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
-    https: try {
+    try {
       const url = qs.stringifyUrl({
         url: apiUrl,
-        query,
+        query: query,
       })
-      await axios.post(url, values)
+      const response = await axios.post(url, values)
+      // console.log(response.data)
       form.reset()
       router.refresh()
     } catch (error) {
