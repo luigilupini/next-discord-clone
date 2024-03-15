@@ -1,6 +1,5 @@
 import { currentProfile } from "@/lib/actions/current-profile"
 import db from "@/lib/db"
-import useSocketStore from "@/state/zustand/use-socket-store"
 import { MemberRole } from "@prisma/client"
 import { NextResponse } from "next/server"
 
@@ -16,12 +15,6 @@ export async function PATCH(
 
     const serverId = searchParams.get("serverId")
     const channelId = searchParams.get("channelId")
-
-    console.log({
-      messageId,
-      serverId,
-      channelId,
-    })
 
     if (!profile) return new NextResponse("Unauthorized", { status: 401 })
     if (!messageId) return new NextResponse("Message ID", { status: 400 })
@@ -82,24 +75,13 @@ export async function PATCH(
         member: { include: { profile: true } },
       },
     })
-
+    // ⭐️ Important: This needs to be consistent
     const updateKey = `chat:${channelId}:messages:update`
-
-    // console.log(useSocketStore.getState().currentNamespace)
-    useSocketStore.getState().switchNamespace("channel")
-    // console.log(useSocketStore.getState().currentNamespace)
-    useSocketStore.getState().socket?.emit("join-channel", {
-      status: 201,
-      event: "join-channel",
-      message: message.content,
-      channelKey: updateKey,
-    })
 
     return NextResponse.json({
       status: 201,
-      event: "join-channel",
+      updateKey: updateKey,
       message: message,
-      channelKey: updateKey,
     })
   } catch (error) {
     console.log("[MESSAGES_ID]", error)
@@ -118,12 +100,6 @@ export async function DELETE(
 
     const serverId = searchParams.get("serverId")
     const channelId = searchParams.get("channelId")
-
-    console.log({
-      messageId,
-      serverId,
-      channelId,
-    })
 
     if (!profile) return new NextResponse("Unauthorized", { status: 401 })
     if (!messageId) return new NextResponse("Message ID", { status: 400 })
@@ -185,24 +161,13 @@ export async function DELETE(
         member: { include: { profile: true } },
       },
     })
-
+    // ⭐️ Important: This needs to be consistent
     const updateKey = `chat:${channelId}:messages:update`
-
-    // console.log(useSocketStore.getState().currentNamespace)
-    useSocketStore.getState().switchNamespace("channel")
-    // console.log(useSocketStore.getState().currentNamespace)
-    useSocketStore.getState().socket?.emit("join-channel", {
-      status: 201,
-      event: "join-channel",
-      message: message.content,
-      channelKey: updateKey,
-    })
 
     return NextResponse.json({
       status: 201,
-      event: "join-channel",
+      updateKey: updateKey,
       message: message,
-      channelKey: updateKey,
     })
   } catch (error) {
     console.log("[MESSAGES_ID]", error)

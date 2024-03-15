@@ -9,6 +9,7 @@ import { QueryProvider } from "@/state/context/leaf/query"
 import ThemeProvider from "@/state/context/leaf/theme"
 
 import { ClerkProvider } from "@clerk/nextjs"
+import { SocketProvider } from "./leaf/socket"
 
 const ProviderTree = ({ children }: PropsWithChildren) => {
   const mounted = useMounted()
@@ -21,11 +22,13 @@ const ProviderTree = ({ children }: PropsWithChildren) => {
         enableSystem
         disableTransitionOnChange
       >
-        <QueryProvider>
-          <ModalProvider />
-          {children}
-        </QueryProvider>
-        <Toaster />
+        <SocketProvider>
+          <QueryProvider>
+            <ModalProvider />
+            {children}
+          </QueryProvider>
+          <Toaster />
+        </SocketProvider>
       </ThemeProvider>
     </ClerkProvider>
   )

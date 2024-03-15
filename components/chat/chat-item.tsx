@@ -7,6 +7,7 @@ import { Form, FormControl, FormField, FormItem } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 import UserAvatar from "@/components/user-avatar"
 import { cn } from "@/lib/utils"
+import { useSocket } from "@/state/context/leaf/socket"
 import useModalStore from "@/state/zustand/use-modal-store"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { Member, MemberRole, Profile } from "@prisma/client"
@@ -68,6 +69,7 @@ export default function ChatItem({
   socketQuery,
 }: Props) {
   const { onOpen } = useModalStore()
+  const { emitMessageUpdate } = useSocket()
   const [isEditing, setIsEditing] = useState(false)
   const params = useParams()
   const router = useRouter()
@@ -91,8 +93,10 @@ export default function ChatItem({
         url: `${socketUrl}/${id}`,
         query: socketQuery,
       })
-      console.log(url)
-      await axios.patch(url, values)
+      // api/socket/messages/[messageId]
+      const response = await axios.patch(url, values)
+      const { message, updateKey } = response.data
+      emitMessageUpdate(updateKey, message)
       form.reset()
       setIsEditing(false)
     } catch (error) {
@@ -125,8 +129,8 @@ export default function ChatItem({
   const isImage = !isPDF && fileUrl
 
   return (
-    <article className="ping group relative flex w-full items-center p-2 transition hover:bg-card/10">
-      <div className="ping group flex w-full items-start gap-x-2">
+    <article className="group relative flex w-full items-center p-2 transition hover:bg-card/10">
+      <div className="group flex w-full items-start gap-x-2">
         <div
           onClick={onMemberClick}
           className="cursor-pointer transition hover:drop-shadow-sm"

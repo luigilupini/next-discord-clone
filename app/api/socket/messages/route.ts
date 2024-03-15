@@ -1,6 +1,5 @@
 import { currentProfile } from "@/lib/actions/current-profile"
 import db from "@/lib/db"
-import useSocketStore from "@/state/zustand/use-socket-store"
 import { NextResponse } from "next/server"
 
 export async function POST(req: Request, res: Response) {
@@ -52,23 +51,13 @@ export async function POST(req: Request, res: Response) {
         member: { include: { profile: true } },
       },
     })
+    // ⭐️ Important: This needs to be consistent
     const channelKey = `chat:${channelId}:messages`
-
-    // console.log(useSocketStore.getState().currentNamespace)
-    useSocketStore.getState().switchNamespace("channel")
-    // console.log(useSocketStore.getState().currentNamespace)
-    useSocketStore.getState().socket?.emit("join-channel", {
-      status: 201,
-      event: "join-channel",
-      message: message.content,
-      channelKey: channelKey,
-    })
 
     return NextResponse.json({
       status: 201,
-      event: "join-channel",
-      message: message,
       channelKey: channelKey,
+      message: message,
     })
   } catch (error) {
     console.log("[MESSAGES_POST]", error)

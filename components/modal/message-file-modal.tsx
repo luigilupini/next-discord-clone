@@ -11,6 +11,7 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog"
 import { Form, FormControl, FormField, FormItem } from "@/components/ui/form"
+import { useSocket } from "@/state/context/leaf/socket"
 import useModalStore from "@/state/zustand/use-modal-store"
 import { zodResolver } from "@hookform/resolvers/zod"
 import axios from "axios"
@@ -24,6 +25,7 @@ const formSchema = z.object({
 })
 
 export default function MessageFileModal() {
+  const { emitNewMessage } = useSocket()
   const { isOpen, onClose, type, data } = useModalStore()
   const isModalOpen = isOpen && type === "messageFile"
   const { apiUrl, query } = data
@@ -45,10 +47,14 @@ export default function MessageFileModal() {
         url: apiUrl || "",
         query: query,
       })
-      await axios.post(url, {
+
+      // api/socket/messages
+      const response = await axios.post(url, {
         ...values,
         content: values.fileUrl,
       })
+      const { channelKey, message } = response.data
+      emitNewMessage(channelKey, message)
       form.reset()
       router.refresh()
       handleClose()

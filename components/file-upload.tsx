@@ -21,8 +21,9 @@ export default function FileUpload({ endpoint, value, onChange }: Props) {
         <Image
           src={value}
           alt="image"
-          className="rounded-full object-cover"
-          layout="fill"
+          className="size-full rounded-full object-cover"
+          width={100}
+          height={100}
           priority
         />
         <Button

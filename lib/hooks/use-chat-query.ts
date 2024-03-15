@@ -1,4 +1,4 @@
-import useSocketStore from "@/state/zustand/use-socket-store"
+import { useSocket } from "@/state/context/leaf/socket"
 import { useInfiniteQuery } from "@tanstack/react-query"
 import qs from "query-string"
 
@@ -15,11 +15,7 @@ export const useChatQuery = ({
   paramKey,
   paramValue,
 }: Props) => {
-  const socket = useSocketStore((state) => state.socket)
-  const isConnected = useSocketStore((state) => state.isConnected)
-
-  // console.log(socket)
-  // console.log(isConnected)
+  const { isConnected } = useSocket()
 
   const fetchMessages = async ({ pageParam = undefined }) => {
     const url = qs.stringifyUrl(
@@ -48,7 +44,6 @@ export const useChatQuery = ({
     queryFn: fetchMessages,
     getNextPageParam: (lastPage) => lastPage?.nextCursor,
     refetchInterval: isConnected ? false : 1000, // 1 seconds
-    // refetchInterval: 1000, // 1 seconds
   })
 
   return {

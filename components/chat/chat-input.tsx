@@ -12,6 +12,7 @@ import EmojiPicker from "@/components/emoji-picker"
 import { Button } from "@/components/ui/button"
 import { Form, FormControl, FormField, FormItem } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
+import { useSocket } from "@/state/context/leaf/socket"
 import useModalStore from "@/state/zustand/use-modal-store"
 
 type Props = {
@@ -27,6 +28,7 @@ const formSchema = z.object({
 
 export default function ChatInput({ apiUrl, query, name, type }: Props) {
   const { onOpen } = useModalStore()
+  const { emitNewMessage } = useSocket()
   const router = useRouter()
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -43,9 +45,10 @@ export default function ChatInput({ apiUrl, query, name, type }: Props) {
         url: apiUrl,
         query: query,
       })
-      // console.log(url)
+      // api/socket/messages
       const response = await axios.post(url, values)
-      // console.log(response.data)
+      const { channelKey, message } = response.data
+      emitNewMessage(channelKey, message)
       form.reset()
       router.refresh()
     } catch (error) {

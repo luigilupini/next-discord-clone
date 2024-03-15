@@ -1,6 +1,9 @@
 "use client"
 
-import { Button } from "@/components/ui/button"
+import axios from "axios"
+import { useRouter } from "next/navigation"
+import { useState } from "react"
+
 import {
   Dialog,
   DialogContent,
@@ -9,48 +12,44 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog"
-import { useSocket } from "@/state/context/leaf/socket"
-import useModalStore from "@/state/zustand/use-modal-store"
-import axios from "axios"
-import qs from "query-string"
-import { useState } from "react"
 
-export default function DeleteMessageModal() {
-  const { emitMessageUpdate } = useSocket()
+import { Button } from "@/components/ui/button"
+import useModalStore from "@/state/zustand/use-modal-store"
+
+export default function DeleteServerModal() {
   const { isOpen, onClose, type, data } = useModalStore()
-  const isModalOpen = isOpen && type === "deleteMessage"
-  const { apiUrl, query } = data
+  const router = useRouter()
+
+  const isModalOpen = isOpen && type === "deleteServer"
+  const { server } = data
 
   const [isLoading, setIsLoading] = useState(false)
 
   const onClick = async () => {
     try {
       setIsLoading(true)
-      const url = qs.stringifyUrl({
-        url: apiUrl || "",
-        query,
-      })
-      // api/socket/messages/[messageId]
-      const response = await axios.delete(url)
-      const { updateKey, message } = response.data
-      emitMessageUpdate(updateKey, message)
+      await axios.delete(`/api/servers/${server?.id}`)
       onClose()
+      router.refresh()
+      router.push("/")
     } catch (error) {
       console.log(error)
     } finally {
       setIsLoading(false)
     }
   }
+
   return (
     <Dialog open={isModalOpen} onOpenChange={onClose}>
       <DialogContent className="overflow-hidden bg-card p-0 text-card-foreground">
         <DialogHeader className="px-6 pt-8">
           <DialogTitle className="text-center text-2xl font-bold">
-            Delete Message
+            Delete Server
           </DialogTitle>
-          <DialogDescription className="text-center opacity-70">
-            Are you sure you want to delete this message? <br /> It will be
-            <span className="font-bold"> permanently </span> deleted.
+          <DialogDescription className="text-center text-card-foreground">
+            Are you sure you want to do this? <br />
+            <span className="font-semibold">{server?.name}</span> will be
+            permanently deleted.
           </DialogDescription>
         </DialogHeader>
         <DialogFooter className="bg-muted/40 px-6 py-4">
