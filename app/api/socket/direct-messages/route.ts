@@ -7,44 +7,39 @@ export async function POST(req: Request, res: Response) {
     const profile = await currentProfile()
     const { content, fileUrl } = await req.json()
     const { searchParams } = new URL(req.url)
-    const serverId = searchParams.get("serverId")
-    const channelId = searchParams.get("channelId")
+    const conversationId = searchParams.get("conversationId")
 
     if (!profile) return new NextResponse("Unauthorized", { status: 401 })
-    if (!serverId) return new NextResponse("Server ID missing", { status: 400 })
-    if (!channelId) return new NextResponse("Channel ID", { status: 400 })
+    if (!conversationId) return new NextResponse("ID missing", { status: 400 })
     if (!content) return new NextResponse("Content missing", { status: 400 })
 
-    const server = await db.server.findFirst({
+    const conversation = await db.conversation.findFirst({
       where: {
-        id: serverId as string,
-        members: {
-          // Ensure the profile is a member of the server
-          some: { profileId: profile.id },
-        },
+        id: conversationId as string,
+        OR: [
+          { memberOne: { profileId: profile.id } },
+          { memberTwo: { profileId: profile.id } },
+        ],
       },
-      include: { members: true },
-    })
-    if (!server) return new NextResponse("Server not found", { status: 404 })
-
-    const channel = await db.channel.findFirst({
-      where: {
-        id: channelId as string,
-        serverId: serverId as string,
+      include: {
+        memberOne: { include: { profile: true } },
+        memberTwo: { include: { profile: true } },
       },
     })
-    if (!channel) return new NextResponse("Channel not found", { status: 404 })
+    if (!conversation)
+      return new NextResponse("No conversation", { status: 404 })
 
-    const member = server.members.find(
-      (member) => member.profileId === profile.id,
-    )
+    const member =
+      conversation.memberOne.profileId === profile.id
+        ? conversation.memberOne
+        : conversation.memberTwo
     if (!member) return new NextResponse("Member not found", { status: 404 })
 
-    const message = await db.message.create({
+    const message = await db.directMessage.create({
       data: {
         content,
         fileUrl,
-        channelId: channelId as string,
+        conversationId: conversationId as string,
         memberId: member.id, // Use the member from above query!
       },
       include: {
@@ -52,7 +47,7 @@ export async function POST(req: Request, res: Response) {
       },
     })
     // ⭐️ Important: This needs to be consistent
-    const channelKey = `chat:${channelId}:messages`
+    const channelKey = `chat:${conversationId}:messages`
 
     return NextResponse.json({
       status: 201,
@@ -60,7 +55,7 @@ export async function POST(req: Request, res: Response) {
       message: message,
     })
   } catch (error) {
-    console.log("[MESSAGES_POST]", error)
+    console.log("[DIRECT_MSG_POST]", error)
     return new NextResponse("Internal Error", { status: 500 })
   }
 }

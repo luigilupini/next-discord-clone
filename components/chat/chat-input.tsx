@@ -45,8 +45,11 @@ export default function ChatInput({ apiUrl, query, name, type }: Props) {
         url: apiUrl,
         query: query,
       })
-      // api/socket/messages
+      console.log(url)
+      // api/socket/messages OR
+      // api/socket/direct-messages
       const response = await axios.post(url, values)
+      console.log(response)
       const { channelKey, message } = response.data
       emitNewMessage(channelKey, message)
       form.reset()
