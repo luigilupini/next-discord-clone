@@ -129,8 +129,8 @@ export default function ChatItem({
   const isImage = !isPDF && fileUrl
 
   return (
-    <article className="group relative flex w-full items-center p-2 transition hover:bg-card/10">
-      <div className="group flex w-full items-start gap-x-2">
+    <article className="group relative flex w-full items-center p-1 transition">
+      <div className="group flex w-full items-start gap-x-2 rounded-md p-2 hover:bg-card">
         <div
           onClick={onMemberClick}
           className="cursor-pointer transition hover:drop-shadow-sm"
@@ -187,18 +187,10 @@ export default function ChatItem({
             </div>
           )}
           {!fileUrl && !isEditing && (
-            <p
-              className={cn(
-                "text-sm text-zinc-600 dark:text-zinc-300",
-                deleted &&
-                  "mt-1 text-xs italic text-zinc-500 dark:text-zinc-400",
-              )}
-            >
+            <p className={cn("text-sm", deleted && "mt-1 text-xs italic")}>
               {content}
               {isUpdated && !deleted && (
-                <span className="mx-2 text-[10px] text-zinc-500 dark:text-zinc-400">
-                  (edited)
-                </span>
+                <span className="mx-2 text-[10px]">(edited)</span>
               )}
             </p>
           )}
@@ -217,7 +209,7 @@ export default function ChatItem({
                         <div className="relative w-full">
                           <Input
                             disabled={isLoading}
-                            className="border-0 border-none bg-zinc-200/90 p-2 text-zinc-600 focus-visible:ring-0 focus-visible:ring-offset-0 dark:bg-zinc-700/75 dark:text-zinc-200"
+                            className="border-0 border-none bg-muted p-2 text-muted-foreground focus-visible:ring-0 focus-visible:ring-offset-0"
                             placeholder="Edited message"
                             {...field}
                           />

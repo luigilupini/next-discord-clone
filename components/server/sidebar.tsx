@@ -75,7 +75,7 @@ export default async function ServerSidebar({ serverId }: Props) {
   return (
     <nav className="flex h-full w-full flex-col bg-card text-card-foreground/90">
       <ServerHeader server={server} role={role} />
-      <ScrollArea className="flex-1 rounded-none border-r px-2 shadow-sm">
+      <ScrollArea className="flex-1 rounded-none border-r px-2">
         <div className="mt-2">
           <ServerSearch
             data={[

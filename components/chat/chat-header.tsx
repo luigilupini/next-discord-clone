@@ -14,7 +14,7 @@ type Props = {
 
 export default function ChatHeader({ serverId, name, type, imageUrl }: Props) {
   return (
-    <header className="text-md flex h-12 items-center border-b bg-card px-3 font-semibold text-card-foreground/80 shadow-sm">
+    <header className="text-md flex h-12 items-center border-b bg-card px-3 font-semibold text-card-foreground/80">
       <MobileToggle serverId={serverId} />
       {type === "channel" && (
         <Hash className="mr-2 size-5 text-card-foreground/60" />

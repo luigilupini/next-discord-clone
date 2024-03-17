@@ -78,7 +78,7 @@ export default function ChatInput({ apiUrl, query, name, type }: Props) {
 
                     <Input
                       disabled={isLoading}
-                      className="border-0 border-none bg-muted px-14 py-6 text-[13px] text-muted-foreground placeholder:text-muted-foreground/60"
+                      className="border bg-muted px-14 py-6 text-[13px] text-muted-foreground shadow-none placeholder:text-muted-foreground/60"
                       placeholder={`Message ${type === "conversation" ? name : "#" + name}`}
                       {...field}
                     />
