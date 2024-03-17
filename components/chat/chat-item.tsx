@@ -163,9 +163,10 @@ export default function ChatItem({
               <Image
                 src={fileUrl}
                 alt={content}
-                fill
-                className="object-cover"
+                width={400}
+                height={400}
                 priority
+                className="object-cover"
               />
             </a>
           )}

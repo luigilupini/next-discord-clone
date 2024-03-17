@@ -41,8 +41,8 @@ export const ServerMember = ({ member }: ServerMemberProps) => {
       variant="ghost"
       size="sm"
       className={cn(
-        "group my-1 flex w-full items-center justify-start gap-x-2 rounded-md p-2 text-card-foreground/70 transition hover:bg-primary/10 hover:text-primary/80",
-        params?.memberId === member.id && "bg-primary/20 text-primary/90",
+        "group my-1 flex w-full items-center justify-start gap-x-2 rounded-md p-2 text-card-foreground/70 transition hover:bg-secondary/10 hover:text-secondary/80",
+        params?.memberId === member.id && "bg-secondary/20 text-secondary/90",
       )}
     >
       <UserAvatar src={member.profile.imageUrl} className="size-5" />

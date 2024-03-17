@@ -45,11 +45,9 @@ export default function ChatInput({ apiUrl, query, name, type }: Props) {
         url: apiUrl,
         query: query,
       })
-      console.log(url)
       // api/socket/messages OR
       // api/socket/direct-messages
       const response = await axios.post(url, values)
-      console.log(response)
       const { channelKey, message } = response.data
       emitNewMessage(channelKey, message)
       form.reset()
@@ -80,7 +78,7 @@ export default function ChatInput({ apiUrl, query, name, type }: Props) {
 
                     <Input
                       disabled={isLoading}
-                      className="border-0 border-none bg-card px-14 py-6 text-[13px] text-card-foreground placeholder:text-card-foreground/60"
+                      className="border-0 border-none bg-muted px-14 py-6 text-[13px] text-muted-foreground placeholder:text-muted-foreground/60"
                       placeholder={`Message ${type === "conversation" ? name : "#" + name}`}
                       {...field}
                     />

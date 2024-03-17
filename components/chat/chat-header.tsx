@@ -3,6 +3,7 @@ import SocketIndicator from "@/components/socket/socket-indicator"
 import UserAvatar from "@/components/user-avatar"
 
 import { Hash } from "lucide-react"
+import ChatVideoButton from "./chat-video-button"
 
 type Props = {
   serverId: string
@@ -27,7 +28,7 @@ export default function ChatHeader({ serverId, name, type, imageUrl }: Props) {
       <p className="text-md font-semibold">{name}</p>
 
       <div className="ml-auto flex items-center">
-        {type === "conversation" && null}
+        {type === "conversation" && <ChatVideoButton />}
         <SocketIndicator />
       </div>
     </header>

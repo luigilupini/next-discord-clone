@@ -25,8 +25,8 @@ export default function SocketIndicator() {
     <Badge
       variant="outline"
       className={cn(
-        "flex items-center justify-center gap-1 bg-warning text-[11px] font-semibold text-warning-foreground",
-        { "bg-success text-success-foreground": isConnected },
+        "flex items-center justify-center gap-1 border-none bg-warning text-[11px] font-semibold text-warning-foreground",
+        { "bg-primary text-primary-foreground": isConnected },
       )}
     >
       {isConnected ? "Live: real-time updates" : "Fallback: polling every 1s"}
