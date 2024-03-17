@@ -95,11 +95,11 @@ export default function ChatMessages({
       {hasNextPage && (
         <div className="flex justify-center">
           {isFetchingNextPage ? (
-            <Loader2 className="my-4 h-6 w-6 animate-spin text-zinc-500" />
+            <Loader2 className="my-4 h-6 w-6 animate-spin" />
           ) : (
             <button
               onClick={() => fetchNextPage()}
-              className="my-4 text-xs text-zinc-500 transition hover:text-zinc-600 dark:text-zinc-400 dark:hover:text-zinc-300"
+              className="my-4 text-xs transition"
             >
               Load previous messages
             </button>
